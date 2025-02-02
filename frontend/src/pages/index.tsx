@@ -4,7 +4,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import bg from "../../public/images/bg-dark.png";
 import thumb from "../../public/images/_1lRF7UL0mg.jpg"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Slider from '@mui/material/Slider';
+import dayjs from 'dayjs';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +30,37 @@ export default function Home() {
     video_id: "_1lRF7UL0mg",
     date: "2017-10-06"
   }
+  const latestEp = 1723
+  let [ep, setEp] = useState(1);
+
+  const sx = {
+    "& .MuiInputLabel-root.Mui-focused": { color: "var(--white)" }, //styles the label
+    "& .MuiInputLabel-root": { color: "var(--white)" }, //styles the label
+    "& .MuiOutlinedInput-root": {
+      "& > fieldset": {
+        borderColor: "var(--white)"
+      },
+      "& > .MuiOutlinedInput-notchedOutline": {
+        borderColor: "var(--white)"
+      },
+      "&:hover > fieldset": {
+        borderColor: "var(--white)",
+        border: "2px solid var(--white)",
+      },
+      "&:active > fieldset": {
+        borderColor: "var(--white)",
+        border: "2px solid var(--white)",
+      },
+      "&:focus > fieldset": {
+        borderColor: "var(--white)",
+        border: "2px solid var(--white)",
+      },
+      "& .MuiSvgIcon-root": {
+        color: "var(--white)"
+      },
+    },
+  }
+  
 
   return (
     <>
@@ -118,10 +154,41 @@ export default function Home() {
           <div className={styles.greenContainer}>
             <h2>Como jogar?</h2>
             <div>
-              <div>1</div>
-              <div>2</div>
-              <div>3</div>
-              <div>4</div>
+              <div>1 Analize a thumbnail e título do vídeo</div>
+              <div>2 Selecione digite ou selecione no calendário o seu palpite de data
+                <ThemeProvider theme={createTheme({
+                  palette: {
+                    mode: 'dark',
+                  },
+                })}>
+                  <DatePicker
+                    label="Data de publicação"
+                    minDate={dayjs("2013-01-01")}
+                    maxDate={dayjs()}
+                    openTo="year"
+                    sx={sx}
+                  />
+                </ThemeProvider>
+              </div>
+              <div>
+                3 Digite o seu palpite do número do episódio
+                <ThemeProvider theme={createTheme({
+                  palette: {
+                    mode: 'dark',
+                  },
+                })}>
+                  <Slider step={1} min={10} max={latestEp} value={ep} onChange={(e, value)=>setEp(value as number)}/>
+                  <TextField
+                    id="outlined-controlled"
+                    label="Outlined"
+                    variant="outlined" sx={sx}
+                    type="number"
+                    value={ep}
+                    onChange={(e)=>setEp(Number(e.target.value))}
+                  />
+                </ThemeProvider>
+              </div>
+              <div>4 Quando estiver pronto, pressione adivinhar</div>
             </div>
           </div>
         </main>

@@ -209,7 +209,7 @@ button.secondary {
   align-self: center;
 }
 
-.main>.greenContainer div {
+.main>.greenContainer>div {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: 1fr 1fr;
