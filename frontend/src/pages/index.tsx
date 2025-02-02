@@ -58,35 +58,36 @@ export default function Home() {
           </div>
         </header>
         <main className={styles.main}>
-          <div className={styles.adivinhe}>
-            <div>
-              <h2>
-                {/* Guess When the video was publish and What Ep it is */}
-                ADIVINHE <span className={styles.lightGreenTxt}>QUAL O EP.</span><br />
-                E <span className={styles.lightGreenTxt}>QUANDO</span> O VÍDEO <br />
-                FOI PUBLICADO
-              </h2>
-              <p>Teste suas habilidades de detetive e fã do canal Cadê a Chave? </p>
-            </div>
-            <div className={styles.greenContainer}>
-              <span>Acha que sabe a resposta?</span>
-              <button
-                // href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                // target="_blank"
-                // rel="noopener noreferrer"
-                onClick={() => setAnswerRevel(!answerReveal)}
-                className={`${styles.cleanbutton} ${styles.primary}`}
-              >
-                {
-                  !answerReveal ?
-                    "Revelar resposta" :
-                    "Esconder resposta"
-                }
-                <span className={styles.emoji}>{
-                  !answerReveal ? "👁️" : "🕶️"
-                }</span>
-              </button>
-              {/* <a
+          <div className={styles.mainExample}>
+            <div className={styles.guess}>
+              <div>
+                <h2>
+                  {/* Guess When the video was publish and What Ep it is */}
+                  ADIVINHE <span className={styles.lightGreenTxt}>QUAL O EP. </span>
+                  E <span className={styles.lightGreenTxt}>QUANDO</span> O VÍDEO
+                  FOI PUBLICADO
+                </h2>
+                <p>Teste suas habilidades de detetive e fã do canal Cadê a Chave? </p>
+              </div>
+              <div className={styles.greenContainer}>
+                <span>Acha que sabe a resposta?</span>
+                <button
+                  // href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+                  // target="_blank"
+                  // rel="noopener noreferrer"
+                  onClick={() => setAnswerRevel(!answerReveal)}
+                  className={`${styles.cleanbutton} ${styles.primary}`}
+                >
+                  {
+                    !answerReveal ?
+                      "Revelar resposta" :
+                      "Esconder resposta"
+                  }
+                  <span className={styles.emoji}>{
+                    !answerReveal ? "👁️" : "🕶️"
+                  }</span>
+                </button>
+                {/* <a
                 href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -94,21 +95,34 @@ export default function Home() {
               >
                 Revelar resposta
               </a> */}
+              </div>
+            </div>
+            <div className={styles.video}>
+              <div className={styles.mainImage}
+              >
+                <div style={{
+                  backgroundImage: `url(${thumb.src})`,
+                }} />
+              </div>
+              <h3>{
+                !answerReveal ? video.formatted_title : video.title
+              }</h3>
+              <p>Data de publicação: {
+                !answerReveal ? "??/??/????" : video.date.split("-").reverse().join("/")
+              }</p>
+              <a className={answerReveal ? styles.secondary : styles.hide} href={`https://www.youtube.com/watch?v=${video.video_id}`}>
+                {answerReveal && "Assistir o vídeo"}
+              </a>
             </div>
           </div>
-          <div className={styles.video}>
-            <div className={styles.mainImage}
-            >
-              <div style={{
-                backgroundImage: `url(${thumb.src})`,
-              }} />
+          <div className={styles.greenContainer}>
+            <h2>Como jogar?</h2>
+            <div>
+              <div>1</div>
+              <div>2</div>
+              <div>3</div>
+              <div>4</div>
             </div>
-            <h3>{
-              !answerReveal ? video.formatted_title : video.title
-            }</h3>
-            <p>Data publicada: {
-              !answerReveal ? "??/??/????" : video.date.split("-").reverse().join("/")
-            }</p>
           </div>
         </main>
         <footer className={styles.footer}>
