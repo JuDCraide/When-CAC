@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import bg from "../../public/images/bg-dark.png";
+import thumb from "../../public/images/_1lRF7UL0mg.jpg"
+import { useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,6 +17,15 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+  let [answerReveal, setAnswerRevel] = useState(false);
+  let video = {
+    title: "ESTRAGARAM O CHURRASCO - Ep.1074",
+    formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
+    ep: 1074,
+    video_id: "_1lRF7UL0mg",
+    date: "2017-10-06"
+  }
+
   return (
     <>
       <Head>
@@ -39,58 +50,69 @@ export default function Home() {
               className={styles.logo}
               src="/images/logo-no-bg.png"
               alt="CAC logo"
-              height={65}
-              width={65}
+              height={56}
+              width={56}
               priority
             />
             <h1><b>When</b> CAC</h1>
           </div>
         </header>
         <main className={styles.main}>
-          {/* 
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js logo"
-            width={180}
-            height={38}
-            priority
-          />
-          <ol>
-            <li>
-              Get started by editing <code>src/pages/index.tsx</code>.
-            </li>
-            <li>Save and see your changes instantly.</li>
-          </ol>
-
-          <div className={styles.ctas}>
-            <a
-              className={styles.primary}
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+          <div className={styles.adivinhe}>
+            <div>
+              <h2>
+                {/* Guess When the video was publish and What Ep it is */}
+                ADIVINHE <span className={styles.lightGreenTxt}>QUAL O EP.</span><br />
+                E <span className={styles.lightGreenTxt}>QUANDO</span> O VÍDEO <br />
+                FOI PUBLICADO
+              </h2>
+              <p>Teste suas habilidades de detetive e fã do canal Cadê a Chave? </p>
+            </div>
+            <div className={styles.greenContainer}>
+              <span>Acha que sabe a resposta?</span>
+              <button
+                // href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+                // target="_blank"
+                // rel="noopener noreferrer"
+                onClick={() => setAnswerRevel(!answerReveal)}
+                className={`${styles.cleanbutton} ${styles.primary}`}
+              >
+                {
+                  !answerReveal ?
+                    "Revelar resposta" :
+                    "Esconder resposta"
+                }
+                <span className={styles.emoji}>{
+                  !answerReveal ? "👁️" : "🕶️"
+                }</span>
+              </button>
+              {/* <a
+                href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.secondary}
+              >
+                Revelar resposta
+              </a> */}
+            </div>
+          </div>
+          <div className={styles.video}>
+            <div className={styles.mainImage}
             >
-              <Image
-                className={styles.logo}
-                src="/vercel.svg"
-                alt="Vercel logomark"
-                width={20}
-                height={20}
-              />
-              Deploy now
-            </a>
-            <a
-              href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.secondary}
-            >
-              Read our docs
-            </a>
-          </div> */}
+              <div style={{
+                backgroundImage: `url(${thumb.src})`,
+              }} />
+            </div>
+            <h3>{
+              !answerReveal ? video.formatted_title : video.title
+            }</h3>
+            <p>Data publicada: {
+              !answerReveal ? "??/??/????" : video.date.split("-").reverse().join("/")
+            }</p>
+          </div>
         </main>
         <footer className={styles.footer}>
-          Made by Júlia and Leo
+          Feito com ♥ por Júlia e Leo
         </footer>
       </div>
     </>
