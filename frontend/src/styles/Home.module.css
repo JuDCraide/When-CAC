@@ -115,11 +115,12 @@
   gap: 0.25em;
 }
 
-.mainExample .video h3{
+.mainExample .video h3 {
   font-size: 1.5em;
 }
 
-.mainExample .mainImage {
+.mainExample .mainImage,
+.greenContainer .mainImage {
   /* flex: 2; */
   display: flex;
   width: 100%;
@@ -127,7 +128,8 @@
   padding-bottom: 0.5em;
 }
 
-.mainExample .mainImage div {
+.mainExample .mainImage div,
+.greenContainer .mainImage div {
   background-size: cover;
   background-repeat: no-repeat;
   flex: 1;
@@ -136,7 +138,8 @@
 }
 
 .mainExample a,
-.mainExample button {
+.mainExample button,
+.greenContainer button {
   appearance: none;
   border-radius: 128px;
   height: 48px;
@@ -204,21 +207,52 @@ button.secondary {
   flex-direction: column;
 }
 
-.main>.greenContainer h2{
+.main>.greenContainer h2 {
   font-size: 2em;
   align-self: center;
 }
 
-.main>.greenContainer>div {
+.main>.greenContainer .instructions {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: 1fr 1fr;
-  padding-top: 0.5em;
+  padding-top: 1em;
+}
+
+.main>.greenContainer .instructions p {
+  padding-bottom: .5em;
 }
 
 .main>.greenContainer div div {
   width: 100%;
   flex: 1;
+}
+
+.main>.greenContainer .instructions .step {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main>.greenContainer .instructions .step>span {
+  margin-bottom: 1em;
+}
+
+.main>.greenContainer .instructions .step>div{
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.main>.greenContainer .instructions .step button{
+  width: 100%;
+}
+
+.instructions .step .mainImage{
+  margin-left: 1em;
+  padding-bottom: 0;
+  width: calc(100% - 2em);
 }
 
 .footer {

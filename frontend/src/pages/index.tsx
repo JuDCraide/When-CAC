@@ -30,8 +30,17 @@ export default function Home() {
     video_id: "_1lRF7UL0mg",
     date: "2017-10-06"
   }
-  const latestEp = 1723
+  const latestEp: number = 1723
   let [ep, setEp] = useState(1);
+
+  const setEpisode = (n: number) => {
+    if (n > latestEp) {
+      n = latestEp
+    } else if (n < 1) {
+      n = 1
+    }
+    setEp(n)
+  }
 
   const sx = {
     "& .MuiInputLabel-root.Mui-focused": { color: "var(--white)" }, //styles the label
@@ -60,7 +69,6 @@ export default function Home() {
       },
     },
   }
-  
 
   return (
     <>
@@ -108,9 +116,6 @@ export default function Home() {
               <div className={styles.greenContainer}>
                 <span>Acha que sabe a resposta?</span>
                 <button
-                  // href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                  // target="_blank"
-                  // rel="noopener noreferrer"
                   onClick={() => setAnswerRevel(!answerReveal)}
                   className={`${styles.cleanbutton} ${styles.primary}`}
                 >
@@ -123,19 +128,10 @@ export default function Home() {
                     !answerReveal ? "👁️" : "🕶️"
                   }</span>
                 </button>
-                {/* <a
-                href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.secondary}
-              >
-                Revelar resposta
-              </a> */}
               </div>
             </div>
             <div className={styles.video}>
-              <div className={styles.mainImage}
-              >
+              <div className={styles.mainImage}>
                 <div style={{
                   backgroundImage: `url(${thumb.src})`,
                 }} />
@@ -153,42 +149,83 @@ export default function Home() {
           </div>
           <div className={styles.greenContainer}>
             <h2>Como jogar?</h2>
-            <div>
-              <div>1 Analize a thumbnail e título do vídeo</div>
-              <div>2 Selecione digite ou selecione no calendário o seu palpite de data
-                <ThemeProvider theme={createTheme({
-                  palette: {
-                    mode: 'dark',
-                  },
-                })}>
-                  <DatePicker
-                    label="Data de publicação"
-                    minDate={dayjs("2013-01-01")}
-                    maxDate={dayjs()}
-                    openTo="year"
-                    sx={sx}
-                  />
-                </ThemeProvider>
+            <div className={styles.instructions}>
+              <div className={styles.step}>
+                <p>1 Analise a thumbnail e título do vídeo</p>
+                <div className={styles.mainImage}>
+                  <div style={{
+                    backgroundImage: `url(${thumb.src})`,
+                  }} />
+                </div>
               </div>
-              <div>
-                3 Digite o seu palpite do número do episódio
+              <div className={styles.step}>
+                <p>2 Digite ou selecione no calendário o seu palpite de data</p>
+                <div>
+                  <ThemeProvider theme={createTheme({
+                    palette: {
+                      mode: 'dark',
+                    },
+                  })}>
+                    <DatePicker
+                      label="Data de publicação"
+                      minDate={dayjs("2013-01-01")}
+                      maxDate={dayjs()}
+                      openTo="year"
+                      sx={sx}
+                    />
+                  </ThemeProvider>
+                  <p></p>
+                </div>
+              </div>
+              <div className={styles.step}>
+                <p>3 Digite ou selecione o seu palpite do número do episódio</p>
                 <ThemeProvider theme={createTheme({
                   palette: {
                     mode: 'dark',
                   },
                 })}>
-                  <Slider step={1} min={10} max={latestEp} value={ep} onChange={(e, value)=>setEp(value as number)}/>
+                  <Slider
+                    className={styles.textField}
+                    step={1} min={1} max={latestEp} value={ep}
+                    onChange={(e, value) => setEpisode(value as number)}
+                    sx={{
+                      color: 'var(--white)',
+                      '& .MuiSlider-track': {
+                        border: 'none',
+                      },
+                      '& .MuiSlider-thumb': {
+                        backgroundColor: 'var(--white)',
+                        border: '2px solid var(--dark-green)',
+                        '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                          boxShadow: 'inherit',
+                        },
+                        '&::before': {
+                          display: 'none',
+                        },
+                      },
+                    }}
+                  />
                   <TextField
                     id="outlined-controlled"
                     label="Outlined"
                     variant="outlined" sx={sx}
                     type="number"
                     value={ep}
-                    onChange={(e)=>setEp(Number(e.target.value))}
+                    onChange={(e) => setEpisode(Number(e.target.value))}
                   />
                 </ThemeProvider>
               </div>
-              <div>4 Quando estiver pronto, pressione adivinhar</div>
+              <div className={styles.step}>
+                <p>4 Quando estiver pronto, pressione adivinhar</p>
+                <div>
+                  <button
+                    // onClick={() => setAnswerRevel(!answerReveal)}
+                    className={`${styles.cleanbutton} ${styles.primary}`}
+                  >
+                    Adivinhar
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </main>
