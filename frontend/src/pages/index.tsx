@@ -4,12 +4,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import bg from "../../public/images/bg-dark.png";
 import thumb from "../../public/images/_1lRF7UL0mg.jpg"
-import { useEffect, useState } from "react";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import Slider from '@mui/material/Slider';
+import { useState } from "react";
 import dayjs from 'dayjs';
+
+import { SelectEpisode, SelectDate } from "../components/Inputs"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,45 +28,9 @@ export default function Home() {
     video_id: "_1lRF7UL0mg",
     date: "2017-10-06"
   }
-  const latestEp: number = 1723
+
   let [ep, setEp] = useState(1);
-
-  const setEpisode = (n: number) => {
-    if (n > latestEp) {
-      n = latestEp
-    } else if (n < 1) {
-      n = 1
-    }
-    setEp(n)
-  }
-
-  const sx = {
-    "& .MuiInputLabel-root.Mui-focused": { color: "var(--white)" }, //styles the label
-    "& .MuiInputLabel-root": { color: "var(--white)" }, //styles the label
-    "& .MuiOutlinedInput-root": {
-      "& > fieldset": {
-        borderColor: "var(--white)"
-      },
-      "& > .MuiOutlinedInput-notchedOutline": {
-        borderColor: "var(--white)"
-      },
-      "&:hover > fieldset": {
-        borderColor: "var(--white)",
-        border: "2px solid var(--white)",
-      },
-      "&:active > fieldset": {
-        borderColor: "var(--white)",
-        border: "2px solid var(--white)",
-      },
-      "&:focus > fieldset": {
-        borderColor: "var(--white)",
-        border: "2px solid var(--white)",
-      },
-      "& .MuiSvgIcon-root": {
-        color: "var(--white)"
-      },
-    },
-  }
+  let [date, setDate] = useState(dayjs());
 
   return (
     <>
@@ -159,61 +121,12 @@ export default function Home() {
                 </div>
               </div>
               <div className={styles.step}>
-                <p>2 Digite ou selecione no calendário o seu palpite de data</p>
-                <div>
-                  <ThemeProvider theme={createTheme({
-                    palette: {
-                      mode: 'dark',
-                    },
-                  })}>
-                    <DatePicker
-                      label="Data de publicação"
-                      minDate={dayjs("2013-01-01")}
-                      maxDate={dayjs()}
-                      openTo="year"
-                      sx={sx}
-                    />
-                  </ThemeProvider>
-                  <p></p>
-                </div>
+                <p>2 Digite ou selecione no calendário o seu palpite da data de publicação</p>
+                <SelectDate setDate={setDate} />
               </div>
               <div className={styles.step}>
                 <p>3 Digite ou selecione o seu palpite do número do episódio</p>
-                <ThemeProvider theme={createTheme({
-                  palette: {
-                    mode: 'dark',
-                  },
-                })}>
-                  <Slider
-                    className={styles.textField}
-                    step={1} min={1} max={latestEp} value={ep}
-                    onChange={(e, value) => setEpisode(value as number)}
-                    sx={{
-                      color: 'var(--white)',
-                      '& .MuiSlider-track': {
-                        border: 'none',
-                      },
-                      '& .MuiSlider-thumb': {
-                        backgroundColor: 'var(--white)',
-                        border: '2px solid var(--dark-green)',
-                        '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-                          boxShadow: 'inherit',
-                        },
-                        '&::before': {
-                          display: 'none',
-                        },
-                      },
-                    }}
-                  />
-                  <TextField
-                    id="outlined-controlled"
-                    label="Outlined"
-                    variant="outlined" sx={sx}
-                    type="number"
-                    value={ep}
-                    onChange={(e) => setEpisode(Number(e.target.value))}
-                  />
-                </ThemeProvider>
+                <SelectEpisode ep={ep} setEp={setEp} />
               </div>
               <div className={styles.step}>
                 <p>4 Quando estiver pronto, pressione adivinhar</p>

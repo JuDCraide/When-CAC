@@ -233,26 +233,22 @@ button.secondary {
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: start;
 }
 
 .main>.greenContainer .instructions .step>span {
   margin-bottom: 1em;
 }
 
-.main>.greenContainer .instructions .step>div{
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-
 .main>.greenContainer .instructions .step button{
+  margin-top: 1em;
   width: 100%;
 }
 
 .instructions .step .mainImage{
-  margin-left: 1em;
+  /* margin-left: 1em; */
   padding-bottom: 0;
-  width: calc(100% - 2em);
+  width: calc(100% - 1em);
 }
 
 .footer {
