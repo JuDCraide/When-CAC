@@ -1,9 +1,14 @@
 import Image from "next/image";
 import styles from "./styles.module.css";
+import bg from "../../../public/images/bg-dark.png";
 
 export default function Header() {
 	return (
-		<header className={styles.header}>
+		<header className={styles.header}
+			style={{
+				backgroundImage: `url(${bg.src})`,
+			}}
+		>
 			<div>
 				<Image
 					className={styles.logo}

@@ -2,7 +2,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
-import styles from "@/styles/Home.module.css";
+import styles from "styles.module.css";
 import { SetStateAction } from 'react';
 import dayjs from 'dayjs';
 
@@ -10,6 +10,9 @@ const sx = {
 	"& .MuiInputLabel-root.Mui-focused": { color: "var(--white)" }, //styles the label
 	"& .MuiInputLabel-root": { color: "var(--white)" }, //styles the label
 	"& .MuiOutlinedInput-root": {
+		// "&": {
+		// 	background: "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))"
+		// },
 		"& > fieldset": {
 			borderColor: "var(--white)"
 		},
@@ -56,38 +59,47 @@ const SelectEpisode: React.FC<SelectEpisodeProps> = ({ ep, setEp }) => {
 				mode: 'dark',
 			},
 		})}>
-			<div style={{ width: "100%", padding: "0 1.2em" }}>
-				<Slider
-					className={styles.textField}
-					step={1} min={1} max={latestEp} value={ep}
-					onChange={(e, value) => setEpisode(value as number)}
-					sx={{
-						color: 'var(--white)',
-						'& .MuiSlider-track': {
-							border: 'none',
-						},
-						'& .MuiSlider-thumb': {
-							backgroundColor: 'var(--white)',
-							border: '2px solid var(--dark-green)',
-							'&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-								boxShadow: 'inherit',
+			<fieldset
+				style={{
+					border: "none",
+					padding: "0",
+					margin: "0",
+					background: "transparent",
+					width: "100%",
+				}}
+			>
+				<div style={{ width: "100%", padding: "0 3%" }}>
+					<Slider
+						step={1} min={1} max={latestEp} value={ep}
+						onChange={(e, value) => setEpisode(value as number)}
+						sx={{
+							color: 'var(--white)',
+							'& .MuiSlider-track': {
+								border: 'none',
 							},
-							'&::before': {
-								display: 'none',
+							'& .MuiSlider-thumb': {
+								backgroundColor: 'var(--white)',
+								border: '2px solid var(--dark-green)',
+								'&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+									boxShadow: 'inherit',
+								},
+								'&::before': {
+									display: 'none',
+								},
 							},
-						},
-					}}
+						}}
+					/>
+				</div>
+				<TextField
+					id="outlined-controlled"
+					label="Episódio"
+					variant="outlined" sx={sx}
+					type="number"
+					value={ep}
+					onChange={(e) => setEpisode(Number(e.target.value))}
+					style={{ marginTop: "0.8em",  width: "100%" }}
 				/>
-			</div>
-			<TextField
-				id="outlined-controlled"
-				label="Outlined"
-				variant="outlined" sx={sx}
-				type="number"
-				value={ep}
-				onChange={(e) => setEpisode(Number(e.target.value))}
-				style={{ marginTop: "0.8em" }}
-			/>
+			</fieldset>
 		</ThemeProvider>
 	)
 }

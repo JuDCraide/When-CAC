@@ -3,12 +3,14 @@
   height: 75px;
   border-bottom: 1px solid var(--green);
 
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-left: 2.5rem;
   padding-right: 2.5rem;
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  z-index: 999;
 }
 
 .header div {

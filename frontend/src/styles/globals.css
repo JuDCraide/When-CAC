@@ -1,14 +1,27 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
+  
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
 
+  --white: #fefefe;
+  --green: #08ac9b;
+  --dark-green: #0b8f82;
+  --darker-green: #008979;
+  --light-green: #00e0cb;
+
+  --button-primary-hover: #006e61;
+  --button-secondary-hover: #0b8f82;
+}
+/* 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 html,
 body {
@@ -34,9 +47,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
-}
+} */

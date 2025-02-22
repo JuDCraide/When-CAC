@@ -1,17 +1,4 @@
 .page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --white: #fefefe;
-  --green: #08ac9b;
-  --dark-green: #0b8f82;
-  --darker-green: #008979;
-  --light-green: #00e0cb;
-
-  --button-primary-hover: #006e61;
-  --button-secondary-hover: #0b8f82;
-
   display: flex;
   flex-direction: column;
   /* grid-template-rows: 20px 1fr 20px; */
@@ -27,7 +14,7 @@
 .main {
   padding-left: 2rem;
   padding-right: 2rem;
-  padding-top: 1.5rem;
+  padding-top: calc(1.5rem + 75px);
   padding-bottom: 1.5rem;
 
   display: flex;
@@ -141,7 +128,7 @@
   margin-top: .25em;
 }
 
-.cleanbutton {
+.cleanButton {
   background: none;
   color: inherit;
   border: none;
@@ -216,12 +203,12 @@ button.secondary {
   margin-bottom: 1em;
 }
 
-.main>.greenContainer .instructions .step button{
+.main>.greenContainer .instructions .step button {
   margin-top: 1em;
   width: 100%;
 }
 
-.instructions .step .mainImage{
+.instructions .step .mainImage {
   /* margin-left: 1em; */
   padding-bottom: 0;
   width: calc(100% - 1em);
