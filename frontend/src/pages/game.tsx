@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 
 import { SelectEpisode, SelectDate } from "../components/Inputs"
 import Header from "../components/Header"
+import NumberDisplay from "../components/Header/NumberDisplay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function Home() {
   let [ep, setEp] = useState(1);
   let [date, setDate] = useState(dayjs());
   let [answerReveal, setAnswerRevel] = useState(false);
+  const roundNumber = 2;
 
   return (
     <>
@@ -46,7 +48,9 @@ export default function Home() {
           backgroundImage: `url(${bg.src})`,
         }}
       >
-        <Header />
+        <Header>
+          <NumberDisplay round={roundNumber}/>
+        </Header>
         <main className={styles.main}>
           <div className={styles.mainExample}>
             <div className={styles.video}>
@@ -59,7 +63,7 @@ export default function Home() {
                 !answerReveal ? video.formatted_title : video.title
               }</h3>
               <p>{!answerReveal &&
-                `Data de publicação: ${video.date.split("-").reverse().join("/")}`
+                `Data de publicação: ${!answerReveal ? "??/??/????" :video.date.split("-").reverse().join("/")}`
               }</p>
               <a className={answerReveal ? styles.secondary : styles.hide} href={`https://www.youtube.com/watch?v=${video.video_id}`}>
                 {answerReveal && "Assistir o vídeo"}

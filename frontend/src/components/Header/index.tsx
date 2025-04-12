@@ -1,8 +1,13 @@
 import Image from "next/image";
 import styles from "./styles.module.css";
 import bg from "../../../public/images/bg-dark.png";
+import { ReactNode } from 'react';
 
-export default function Header() {
+interface HeaderProps {
+	children?: ReactNode | null
+} 
+
+export default function Header({ children }: HeaderProps) {
 	return (
 		<header className={styles.header}
 			style={{
@@ -20,6 +25,10 @@ export default function Header() {
 				/>
 				<h1><b>When</b> CAC</h1>
 			</div>
+			<div>
+				{children}
+			</div>
+			<div />
 		</header>
 	)
 }

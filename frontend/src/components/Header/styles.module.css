@@ -19,6 +19,10 @@
   justify-content: center;
 }
 
+.header>div{
+  flex: 1;
+}
+
 .header h1 {
   font-size: 2.25em;
   font-weight: normal;

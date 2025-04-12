@@ -1,0 +1,25 @@
+.numberDisplay {
+  border-radius: 2rem;
+  padding: 0 2rem;
+  background-color: var(--green);
+
+  display: flex;
+  flex-direction: row;
+}
+
+.numberDisplay .number {
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  margin: 0.4rem;
+  background-color: var(--dark-green);
+}
+
+.numberDisplay .roundNumber {
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+  margin: 0.25rem 0.4rem;
+  border: 1px solid var(--white);
+  
+}
