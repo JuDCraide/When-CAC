@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import Game from '../../../api/game';
+import { createGame } from "@/api/database";
 
 type Data = {
   name: string;
@@ -8,7 +9,7 @@ type Data = {
 
 const games = new Map<string, Game>();
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data | Game>,
 ) {
@@ -21,6 +22,7 @@ export default function handler(
     }
     
     games.set(game.uuid, game);
+    console.log(await createGame(game))
     res.status(200).json(game);
     
   } else {
