@@ -1,27 +1,23 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { GuessVideo } from '../../../api/database';
-import { games } from './index'
+import { getGuessVideo, GuessVideo } from '../../../api/database';
 
-export default function handler(
+export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<GuessVideo>,
+	res: NextApiResponse<GuessVideo | null>,
 ) {
 	if (req.method === 'GET') {
-		if (typeof (req.query?.uuid) == 'string' && typeof (req.query?.number) == 'string') {
-			let route = Number(req.query?.number);
-			const uuid = req.query?.uuid
-			const game = games.get(uuid);
-			if (game) {
-				const guessVideo = game.get_round(route)
-				return res.status(200).json(guessVideo);
-			}
-			res.status(404);
+		console.log(typeof (req.query?.round))
+		if (typeof (req.query?.uuid) == 'string' && typeof (req.query?.round) == 'string') {
+			let round = Number(req.query?.round);
+			const guessVideo = await getGuessVideo(req.query.uuid, round);
+			if (guessVideo)
+				res.status(200).json(guessVideo);
+			else
+				res.status(404).send(null);
 		} else {
-			res.status(400);
+			res.status(400).send(null);
 		}
 	} else {
-		res.status(405);
+		res.status(405).send(null);
 	}
-
 }

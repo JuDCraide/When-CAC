@@ -8,29 +8,28 @@ type Data = {
   latestEp: number;
 };
 
-export const games = new Map<string, Game>();
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>,
+  res: NextApiResponse<Data | null>,
 ) {
   if (req.method === 'GET') {
     let game;
-    if(typeof(req.query?.seed) == 'string'){
+    if (typeof (req.query?.seed) == 'string') {
       game = new Game(req.query.seed);
     } else {
       game = new Game();
     }
-    
-    games.set(game.uuid, game);
-    await createGame(game)
-    res.status(200).json({
-      uuid: game.uuid,
-      latestEp: game.seed.latest_ep,
-    });
-    
+
+    if (await createGame(game)) {
+      return res.status(200).json({
+        uuid: game._id.toString(),
+        latestEp: game.seed.latest_ep,
+      });
+    }
+    res.status(400).send(null);
   } else {
-    res.status(405);
+    res.status(405).send(null);
   }
-  
+
 }
