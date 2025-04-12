@@ -1,4 +1,5 @@
 import { uuidv7 } from "uuidv7";
+import * as Database from "./database";
 
 class Game {
     uuid: string;
@@ -12,6 +13,15 @@ class Game {
         this.uuid = uuidv7();
         this.start_timestamp = new Date().getTime();
         this.seed = new Seed(seed, this.start_timestamp);
+        this.episodes = this.seed.get_episodes()
     }
-    
+
+    get_round(round: number): Database.GuessVideo{
+        return Database.getGuessVideo(this.episodes[round-1])
+    }
+
+    get_round_response(round: number): Database.VideoResponse{
+        return Database.getResponseVideo(this.episodes[round-1])
+    }
+
 }
