@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 
 import { SelectEpisode, SelectDate } from "../components/Inputs"
 import Header from "../components/Header"
-import NumberDisplay from "../components/Header/NumberDisplay";
+import RoundDisplay from "../components/Header/NumberDisplay";
 import { useRouter } from "next/router";
 
 const geistSans = Geist({
@@ -96,7 +96,7 @@ export default function Home() {
         }}
       >
         <Header>
-          <NumberDisplay round={round} />
+          <RoundDisplay round={round} />
         </Header>
         <main className={styles.main}>
           <div className={styles.mainExample}>

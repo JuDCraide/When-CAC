@@ -1,29 +1,17 @@
-import Image from "next/image";
 import styles from "./styles.module.css";
-import bg from "../../../public/images/bg-dark.png";
 
-interface NumberDisplayProps {
+interface RoundDisplayProps {
 	round: number
 }
 
-export default function NumberDisplay({ round }: NumberDisplayProps) {
+export default function RoundDisplay({ round }: RoundDisplayProps) {
 	return (
 		<div className={styles.numberDisplay}>
-			Round {[1, 2, 3, 4, 5].map(number => {
-				if (number == round) {
-					return (
-						<div className={styles.roundNumber}>
-							{number}
-						</div>
-					)
-				} else {
-					return (
-						<div className={styles.number}>
-							{number}
-						</div>
-					)
-				}
-			})}
+			Round {[1, 2, 3, 4, 5].map(number =>
+				<div key={number} className={number == round ? styles.roundNumber : styles.number}>
+					{number}
+				</div>
+			)}
 		</div>
 	)
 }
