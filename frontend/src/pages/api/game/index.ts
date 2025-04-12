@@ -7,7 +7,7 @@ type Data = {
   name: string;
 };
 
-const games = new Map<string, Game>();
+export const games = new Map<string, Game>();
 
 export default async function handler(
   req: NextApiRequest,
