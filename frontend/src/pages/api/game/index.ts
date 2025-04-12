@@ -4,14 +4,15 @@ import Game from '../../../api/game';
 import { createGame } from "@/api/database";
 
 type Data = {
-  name: string;
+  uuid: string;
+  latestEp: number;
 };
 
 export const games = new Map<string, Game>();
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | Game>,
+  res: NextApiResponse<Data>,
 ) {
   if (req.method === 'GET') {
     let game;
@@ -22,11 +23,14 @@ export default async function handler(
     }
     
     games.set(game.uuid, game);
-    console.log(await createGame(game))
-    res.status(200).json(game);
+    await createGame(game)
+    res.status(200).json({
+      uuid: game.uuid,
+      latestEp: game.seed.latest_ep,
+    });
     
   } else {
-    res.status(405).json({ name: "Method Not Allowed" });
+    res.status(405);
   }
   
 }

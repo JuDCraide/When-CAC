@@ -3,13 +3,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { GuessVideo } from '../../../api/database';
 import { games } from './index'
 
-type Data = {
-	name: string;
-};
-
 export default function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<Data | GuessVideo>,
+	res: NextApiResponse<GuessVideo>,
 ) {
 	if (req.method === 'GET') {
 		if (typeof (req.query?.uuid) == 'string' && typeof (req.query?.number) == 'string') {
@@ -20,12 +16,12 @@ export default function handler(
 				const guessVideo = game.get_round(route)
 				return res.status(200).json(guessVideo);
 			}
-			res.status(404).json({ name: "Not Found" });
+			res.status(404);
 		} else {
-			res.status(400).json({ name: "Bad Request" });
+			res.status(400);
 		}
 	} else {
-		res.status(405).json({ name: "Method Not Allowed" });
+		res.status(405);
 	}
 
 }
