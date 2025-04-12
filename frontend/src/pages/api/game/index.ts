@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import Game from '../../../api/game';
 import { createGame } from "@/api/database";
 
-type Data = {
+export type GameData = {
   uuid: string;
   latestEp: number;
 };
@@ -11,7 +11,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | null>,
+  res: NextApiResponse<GameData | null>,
 ) {
   if (req.method === 'GET') {
     let game;
