@@ -14,9 +14,8 @@ export default function Header({ children }: HeaderProps) {
 				backgroundImage: `url(${bg.src})`,
 			}}
 		>
-			<div>
+			<div className={styles.logo}>
 				<Image
-					className={styles.logo}
 					src="/images/logo-no-bg.png"
 					alt="CAC logo"
 					height={56}

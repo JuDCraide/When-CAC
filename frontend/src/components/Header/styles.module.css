@@ -28,3 +28,7 @@
   font-weight: normal;
   padding-top: 3px;
 }
+
+.header .logo{
+  justify-content: flex-start;
+}
