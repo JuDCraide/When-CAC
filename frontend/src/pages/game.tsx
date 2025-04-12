@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { SelectEpisode, SelectDate } from "../components/Inputs"
 import Header from "../components/Header"
 import NumberDisplay from "../components/Header/NumberDisplay";
+import { useRouter } from "next/router";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,18 +22,64 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  let video = {
-    title: "ESTRAGARAM O CHURRASCO - Ep.1074",
-    formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
-    ep: 1074,
-    video_id: "_1lRF7UL0mg",
-    date: "2017-10-06"
-  }
+  let videos = [
+    {
+      title: "ESTRAGARAM O CHURRASCO - Ep.1074",
+      formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
+      ep: 1074,
+      video_id: "_1lRF7UL0mg",
+      date: "2017-10-06"
+    },
+    {
+      title: "ESTRAGARAM O CHURRASCO - Ep.1074",
+      formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
+      ep: 1074,
+      video_id: "_1lRF7UL0mg",
+      date: "2017-10-06"
+    },
+    {
+      title: "ESTRAGARAM O CHURRASCO - Ep.1074",
+      formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
+      ep: 1074,
+      video_id: "_1lRF7UL0mg",
+      date: "2017-10-06"
+    },
+    {
+      title: "ESTRAGARAM O CHURRASCO - Ep.1074",
+      formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
+      ep: 1074,
+      video_id: "_1lRF7UL0mg",
+      date: "2017-10-06"
+    },
+    {
+      title: "ESTRAGARAM O CHURRASCO - Ep.1074",
+      formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
+      ep: 1074,
+      video_id: "_1lRF7UL0mg",
+      date: "2017-10-06"
+    }
+  ]
   const latestEp: number = 1723
   let [ep, setEp] = useState(1);
   let [date, setDate] = useState(dayjs());
-  let [answerReveal, setAnswerRevel] = useState(false);
-  const roundNumber = 2;
+  let [answered, setAnswered] = useState(false);
+  let [round, setRound] = useState(1);
+  const router = useRouter();
+
+  const onAnswer = () => {
+    // TODO: calculate points based on date and ep
+    setAnswered(true)
+  }
+
+  const onNext = () => {
+    setAnswered(false)
+    if(round < 5){
+    setRound(round + 1)
+    } else {
+      // TODO: Go to result page
+      router.push('/')
+    }
+  }
 
   return (
     <>
@@ -49,7 +96,7 @@ export default function Home() {
         }}
       >
         <Header>
-          <NumberDisplay round={roundNumber}/>
+          <NumberDisplay round={round} />
         </Header>
         <main className={styles.main}>
           <div className={styles.mainExample}>
@@ -60,24 +107,38 @@ export default function Home() {
                 }} />
               </div>
               <h3>{
-                !answerReveal ? video.formatted_title : video.title
+                !answered ? videos[round - 1].formatted_title : videos[round - 1].title
               }</h3>
-              <p>{!answerReveal &&
-                `Data de publicação: ${!answerReveal ? "??/??/????" :video.date.split("-").reverse().join("/")}`
+              <p>{!answered &&
+                `Data de publicação: ${!answered ? "??/??/????" : videos[round - 1].date.split("-").reverse().join("/")}`
               }</p>
-              <a className={answerReveal ? styles.secondary : styles.hide} href={`https://www.youtube.com/watch?v=${video.video_id}`}>
-                {answerReveal && "Assistir o vídeo"}
+              <a className={answered ? styles.secondary : styles.hide} href={`https://www.youtube.com/watch?v=${videos[round - 1].video_id}`}>
+                {answered && "Assistir o vídeo"}
               </a>
             </div>
             <div className={styles.greenAnswerContainer}>
-              <SelectDate setDate={setDate} />
-              <SelectEpisode ep={ep} setEp={setEp} />
-              <button
-                // onClick={() => setAnswerRevel(!answerReveal)}
-                className={`${styles.cleanButton} ${styles.primary}`}
-              >
-                Adivinhar
-              </button>
+              {!answered ?
+                <>
+                  <SelectDate setDate={setDate} />
+                  <SelectEpisode ep={ep} setEp={setEp} />
+                  <button
+                    onClick={() => onAnswer()}
+                    className={`${styles.cleanButton} ${styles.primary}`}
+                  >
+                    Adivinhar
+                  </button>
+                </>
+                :
+                <>
+                  seu resultado aqui =)
+                  <button
+                    onClick={() => onNext()}
+                    className={`${styles.cleanButton} ${styles.primary}`}
+                  >
+                    Próximo Round
+                  </button>
+                </>
+              }
             </div>
           </div>
         </main>
