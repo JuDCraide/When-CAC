@@ -109,10 +109,10 @@ export default function Home() {
               <h3>{
                 !answered ? videos[round - 1].formatted_title : videos[round - 1].title
               }</h3>
-              <p>{!answered &&
+              <p>{
                 `Data de publicação: ${!answered ? "??/??/????" : videos[round - 1].date.split("-").reverse().join("/")}`
               }</p>
-              <a className={answered ? styles.secondary : styles.hide} href={`https://www.youtube.com/watch?v=${videos[round - 1].video_id}`}>
+              <a className={`${styles.secondary} ${answered ? "" : styles.hide}`} href={`https://www.youtube.com/watch?v=${videos[round - 1].video_id}`}>
                 {answered && "Assistir o vídeo"}
               </a>
             </div>

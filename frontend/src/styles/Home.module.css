@@ -108,7 +108,7 @@
   height: 48px;
   padding: 0 20px;
   border: none;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   transition:
     background-color 0.2s,
     color 0.2s,
@@ -141,6 +141,7 @@
 a.primary,
 button.primary {
   background: var(--darker-green);
+  color: var(--white);
   gap: 4px;
 }
 
@@ -148,6 +149,7 @@ a.secondary,
 button.secondary {
   background-color: var(--dark-green);
   border-color: var(--green);
+  color: var(--white);
   min-width: 180px;
 }
 

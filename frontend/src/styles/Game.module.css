@@ -95,26 +95,15 @@
 }
 
 a.primary,
-button.primary {
-  background: var(--darker-green);
-  gap: 4px;
-}
-
 a.secondary,
+button.primary,
 button.secondary {
-  background-color: var(--dark-green);
-  border-color: var(--green);
-  min-width: 180px;
-}
-
-.mainExample a,
-.mainExample button {
   appearance: none;
   border-radius: 128px;
   height: 48px;
   padding: 0 20px;
   border: none;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   transition:
     background-color 0.2s,
     color 0.2s,
@@ -130,6 +119,27 @@ button.secondary {
   width: 100%;
 }
 
+a.primary,
+button.primary {
+  background: var(--darker-green);
+  color: var(--white);
+  gap: 4px;
+}
+
+a.secondary,
+button.secondary {
+  background-color: var(--dark-green);
+  border-color: var(--green);
+  color: var(--white);
+  min-width: 180px;
+}
+
+.hide,
+.video .hide
+ {
+  background: transparent;
+  border-color: transparent;
+}
 
 @media (hover: hover) and (pointer: fine) {
   a.primary:hover,
