@@ -5,7 +5,7 @@ interface decodedSeed {
     latest_ep: number;
 }
 
-class Seed {
+export default class Seed {
     start_timestamp: number;
     latest_ep: number;
     encoded_seed: string;
@@ -29,7 +29,8 @@ class Seed {
     }
 
     get_episodes(): number[] {
-        return []
+        //TODO: Make function to generate random numbers
+        return [1, 2, 3, 4, 5]
     }
 
     decode_seed(): decodedSeed {

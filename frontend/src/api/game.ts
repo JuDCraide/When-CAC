@@ -1,7 +1,8 @@
 import { uuidv7 } from "uuidv7";
 import * as Database from "./database";
+import Seed from "./seed";
 
-class Game {
+export default class Game {
     uuid: string;
     seed: Seed;
     episodes: number[] = [0,0,0,0,0];
