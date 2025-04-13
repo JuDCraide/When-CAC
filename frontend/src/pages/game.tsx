@@ -7,10 +7,9 @@ import dayjs from 'dayjs';
 
 import { SelectEpisode, SelectDate } from "../components/Inputs"
 import Header from "../components/Header"
-import RoundDisplay from "../components/Header/RoundDisplay";
 import { useRouter } from "next/router";
 import { GameData } from "./api/game";
-import { GuessVideo, VideoResponse } from "@/api/database";
+import { GuessVideo, ResultResponse, VideoResponse } from "@/api/database";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +29,8 @@ export default function Home() {
   const [answered, setAnswered] = useState(false);
   const [round, setRound] = useState(1);
   const [totalPoints, setTotalPoints] = useState(0);
+  const [currEpPoints, setCurrEpPoints] = useState(0);
+  const [currDatePoints, setCurrDatePoints] = useState(0);
   const [guessVideo, setGuessVideo] = useState<null | GuessVideo>(null);
   const [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
 
@@ -53,11 +54,14 @@ export default function Home() {
           date,
         })
       }
-    )).json() as VideoResponse
+    )).json() as ResultResponse
     if (guessVideoRes === null) {
       return //Error
     }
-    setVideoResponse(guessVideoRes)
+    setVideoResponse(guessVideoRes.responseVideo)
+    setCurrDatePoints(guessVideoRes.points.date)
+    setCurrEpPoints(guessVideoRes.points.ep)
+    setTotalPoints(totalPoints + guessVideoRes.points.ep + guessVideoRes.points.date)
     setAnswered(true)
   }
 
@@ -67,6 +71,8 @@ export default function Home() {
       setRound(nextRound)
       await getRound(nextRound)
       setAnswered(false)
+      setCurrDatePoints(0)
+      setCurrEpPoints(0)
     } else {
       // TODO: Go to result page
       router.push('/')
@@ -153,7 +159,7 @@ export default function Home() {
                   <div>
                     <h3>📅 {stringDateToSlash(videoResponse?.date)}</h3>
                     <p>Você adivinhou: <h5>{date.format('DD/MM/YYYY')}</h5></p>
-                    <p>Diferença: <h5>{date.diff(dayjs(videoResponse?.date), 'day')}</h5></p>
+                    <p>Diferença: <h5>{Math.abs(date.diff(dayjs(videoResponse?.date), 'day'))}</h5></p>
                   </div>
                   <div>
                     <h3>💻 Ep. {videoResponse?.ep}</h3>
@@ -163,17 +169,17 @@ export default function Home() {
                   <div>
                     <div className={styles.resultPoints}>
                       <div className={styles.resultPoints}>
-                        <h4>📅 100</h4><h5>/100</h5>
+                        <h4>📅 {currDatePoints}</h4><h5>/100</h5>
                       </div>
                       <h4>+</h4>
                       <div className={styles.resultPoints}>
-                        <h4>💻 100</h4><h5>/100</h5>
+                        <h4>💻 {currEpPoints}</h4><h5>/100</h5>
                       </div>
                     </div>
                     <div className={styles.resultPoints}>
                       <h4>=</h4>
                       <div className={styles.resultPoints}>
-                        <h4>🏆 200</h4><h5>/200</h5>
+                        <h4>🏆 {totalPoints}</h4><h5>/200</h5>
                       </div>
                     </div>
                   </div>

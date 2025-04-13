@@ -1,6 +1,6 @@
 import { Dayjs } from "dayjs"
 
-function calculatePointsEps(ep: number, guessEp: number) {
+export function calculatePointsEps(ep: number, guessEp: number) {
     const diff = Math.abs(ep - guessEp)
     if (diff === 0) {
         return 100
@@ -21,8 +21,8 @@ function calculatePointsEps(ep: number, guessEp: number) {
     }
 }
 
-function calculatePointsDate(date: Dayjs, guessDate: Dayjs) {
-    const diff = date.diff(guessDate, "days")
+export function calculatePointsDate(date: Dayjs, guessDate: Dayjs) {
+    const diff = Math.abs(date.diff(guessDate, "days"))
     if (diff <= 1) {
         return 100
     } else if (diff <= 3) {

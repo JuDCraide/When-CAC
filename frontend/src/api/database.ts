@@ -3,6 +3,8 @@ import * as mongoDB from "mongodb";
 import Game from './game';
 import fs from 'fs';
 import path from 'path';
+import { calculatePointsDate, calculatePointsEps } from './points';
+import dayjs from 'dayjs';
 
 export interface GuessVideo {
     formatted_title: string,
@@ -15,6 +17,14 @@ export interface VideoResponse {
     ep: number,
     video_id: string,
     date: string
+}
+
+export interface ResultResponse {
+    responseVideo: VideoResponse
+    points:{
+        ep: number,
+        date: number,
+    }
 }
 
 // interface Video {
@@ -81,7 +91,7 @@ async function getGuessVideo(uuid: string, round: number) {
 async function getResponseVideo(uuid: string, round: number, epGuess: number, dateGuess: string) {
     // TODO: calculate points, update db, return points to frontend
     // https://stackoverflow.com/questions/24747189/update-and-return-document-in-mongodb
-    let responseVideo = null;
+    let response = null;
     if (process.env.DB_CONN_STRING) {
         const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
         try {
@@ -94,12 +104,25 @@ async function getResponseVideo(uuid: string, round: number, epGuess: number, da
                     const videoCollection = db.collection("videos");
                     const video = await videoCollection.findOne<VideoResponse>({ ep: game.episodes[round - 1] });
                     if (video) {
-                        responseVideo =
-                        {
-                            title: video.title,
-                            ep: video.ep,
-                            video_id: video.video_id,
-                            date: video.date
+                        const pointsEp = calculatePointsEps(video.ep, epGuess)
+                        const pointsDate = calculatePointsDate(dayjs(video.date), dayjs(dateGuess))
+                        game.ep_points[round - 1] = pointsEp
+                        game.date_points[round - 1] = pointsDate
+                        await gamesCollection.updateOne({ _id: new ObjectId(uuid) }, {$set:{
+                            "ep_points": game.ep_points,
+                            "date_points": game.date_points
+                        }});
+                        response = {
+                            responseVideo: {
+                                title: video.title,
+                                ep: video.ep,
+                                video_id: video.video_id,
+                                date: video.date
+                            },
+                            points: {
+                                ep: pointsEp,
+                                date: pointsDate,
+                            }
                         };
                     }
                 }
@@ -110,7 +133,7 @@ async function getResponseVideo(uuid: string, round: number, epGuess: number, da
             await client.close();
         }
     }
-    return responseVideo;
+    return response;
 }
 
 export function getImageAsBase64(relativePath: string): string {
