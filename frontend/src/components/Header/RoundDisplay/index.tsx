@@ -6,7 +6,7 @@ interface RoundDisplayProps {
 
 export default function RoundDisplay({ round }: RoundDisplayProps) {
 	return (
-		<div className={styles.numberDisplay}>
+		<div className={styles.roundDisplay}>
 			Round {[1, 2, 3, 4, 5].map(number =>
 				<div key={number} className={number == round ? styles.roundNumber : styles.number}>
 					{number}

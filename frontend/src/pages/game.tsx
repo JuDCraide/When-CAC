@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 
 import { SelectEpisode, SelectDate } from "../components/Inputs"
 import Header from "../components/Header"
-import RoundDisplay from "../components/Header/NumberDisplay";
+import RoundDisplay from "../components/Header/RoundDisplay";
 import { useRouter } from "next/router";
 import { GameData } from "./api/game";
 import { GuessVideo, VideoResponse } from "@/api/database";
@@ -29,6 +29,7 @@ export default function Home() {
   const [date, setDate] = useState(dayjs());
   const [answered, setAnswered] = useState(false);
   const [round, setRound] = useState(1);
+  const [totalPoints, setTotalPoints] = useState(0);
   const [guessVideo, setGuessVideo] = useState<null | GuessVideo>(null);
   const [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
 
@@ -115,9 +116,7 @@ export default function Home() {
           backgroundImage: `url(${bg.src})`,
         }}
       >
-        <Header>
-          <RoundDisplay round={round} />
-        </Header>
+        <Header round={round} points={totalPoints} />
         <main className={styles.main}>
           <div className={styles.mainGame}>
             <div className={styles.video}>
@@ -150,16 +149,15 @@ export default function Home() {
                 </>
                 :
                 <>
-                  <h2>Resultado</h2>
-
+                  {/* <h2>Resultado</h2> */}
                   <div>
                     <h3>📅 {stringDateToSlash(videoResponse?.date)}</h3>
                     <p>Você adivinhou: <h5>{date.format('DD/MM/YYYY')}</h5></p>
                     <p>Diferença: <h5>{date.diff(dayjs(videoResponse?.date), 'day')}</h5></p>
                   </div>
                   <div>
-                    <h3>💻 {videoResponse?.ep}</h3>
-                    <p>Você adivinhou: <h5>{ep}</h5></p>
+                    <h3>💻 Ep. {videoResponse?.ep}</h3>
+                    <p>Você adivinhou: <h5>Ep. {ep}</h5></p>
                     <p>Diferença: <h5>{Math.abs(videoResponse?.ep || 1 - ep)}</h5></p>
                   </div>
                   <div>

@@ -1,4 +1,4 @@
-.numberDisplay {
+.roundDisplay {
   border-radius: 2rem;
   padding: 0 1rem;
   background-color: var(--green);
@@ -7,7 +7,7 @@
   flex-direction: row;
 }
 
-.numberDisplay .number {
+.roundDisplay .number {
   border-radius: 50%;
   height: 32px;
   width: 32px;
@@ -15,10 +15,10 @@
   background-color: var(--dark-green);
 }
 
-.numberDisplay .roundNumber {
+.roundDisplay .roundNumber {
   border-radius: 50%;
-  height: 48px;
-  width: 48px;
+  height: 40px;
+  width: 40px;
   margin: 0.25rem 0.4rem;
   border: 1px solid var(--white);
   

@@ -1,13 +1,15 @@
 import Image from "next/image";
 import styles from "./styles.module.css";
 import bg from "../../../public/images/bg-dark.png";
-import { ReactNode } from 'react';
+import RoundDisplay from "./RoundDisplay";
+import PointsDisplay from "./PointsDisplay";
 
 interface HeaderProps {
-	children?: ReactNode | null
-} 
+	round?: number | null,
+	points?: number | null,
+}
 
-export default function Header({ children }: HeaderProps) {
+export default function Header({ round = null, points = null }: HeaderProps) {
 	return (
 		<header className={styles.header}
 			style={{
@@ -25,9 +27,11 @@ export default function Header({ children }: HeaderProps) {
 				<h1><b>When</b> CAC</h1>
 			</div>
 			<div>
-				{children}
+				{round !== null && <RoundDisplay round={round} />}
 			</div>
-			<div />
+			<div>
+				{points !== null && <PointsDisplay points={points} />}
+			</div>
 		</header>
 	)
 }
