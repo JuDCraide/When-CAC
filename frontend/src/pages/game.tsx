@@ -105,7 +105,7 @@ export default function Home() {
             <div className={styles.video}>
               <div className={styles.mainImage}>
                 <div style={{
-                  backgroundImage: `url(${thumb.src})`,
+                  backgroundImage: `url(${guessVideo?.image_url})`,
                 }} />
               </div>
               <h3>{
