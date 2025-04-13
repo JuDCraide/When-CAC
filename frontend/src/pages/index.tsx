@@ -10,6 +10,9 @@ import dayjs from 'dayjs';
 import { SelectEpisode, SelectDate } from "../components/Inputs"
 import Header from "../components/Header"
 
+//TODO: make API call
+const LATEST_EP = 1723;
+
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -30,8 +33,8 @@ export default function Home() {
 		date: "2017-10-06"
 	}
 
-	let [ep, setEp] = useState(1);
-	let [date, setDate] = useState(dayjs());
+	const [ep, setEp] = useState(1);
+	const [date, setDate] = useState(dayjs());
 
 	return (
 		<>
@@ -111,7 +114,7 @@ export default function Home() {
 							</div>
 							<div className={styles.step}>
 								<p>3 Digite ou selecione o seu palpite do número do episódio</p>
-								<SelectEpisode ep={ep} setEp={setEp} latestEp={1723} />
+								<SelectEpisode ep={ep} setEp={setEp} latestEp={LATEST_EP} />
 							</div>
 							<div className={styles.step}>
 								<p>4 Quando estiver pronto, pressione adivinhar</p>

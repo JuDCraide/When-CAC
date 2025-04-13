@@ -24,17 +24,21 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  let [latestEp, setLatestEp] = useState(1);
-  let [uuid, setUuid] = useState("");
-  let [ep, setEp] = useState(-1);
-  let [date, setDate] = useState(dayjs());
-  let [answered, setAnswered] = useState(false);
-  let [round, setRound] = useState(1);
-  let [guessVideo, setGuessVideo] = useState<null | GuessVideo>(null);
-  let [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
+  const [latestEp, setLatestEp] = useState(1);
+  const [uuid, setUuid] = useState("");
+  const [ep, setEp] = useState(1);
+  const [date, setDate] = useState(dayjs());
+  const [answered, setAnswered] = useState(false);
+  const [round, setRound] = useState(1);
+  const [guessVideo, setGuessVideo] = useState<null | GuessVideo>(null);
+  const [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
+
   const router = useRouter();
 
   async function onAnswer() {
+    if (dayjs().diff(date, 'day') && ep === 1) {
+      //TODO: make a are you sure you want to guess? 
+    }
     const guessVideoRes = await (await fetch(`/api/game/response?uuid=${uuid}&round=${round}`)).json() as VideoResponse
     if (guessVideoRes === null) {
       return //Error
@@ -118,7 +122,7 @@ export default function Home() {
               {!answered ?
                 <>
                   <SelectDate setDate={setDate} />
-                  <SelectEpisode ep={ep} setEp={setEp} latestEp={latestEp}/>
+                  <SelectEpisode ep={ep} setEp={setEp} latestEp={latestEp} />
                   <button
                     onClick={async () => await onAnswer()}
                     className={`${styles.cleanButton} ${styles.primary}`}
