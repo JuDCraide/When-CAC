@@ -24,7 +24,8 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  let latestEp: number = 1;
+  let [latestEp, setLatestEp] = useState(1);
+  let [uuid, setUuid] = useState("");
   let [ep, setEp] = useState(1);
   let [date, setDate] = useState(dayjs());
   let [answered, setAnswered] = useState(false);
@@ -33,20 +34,30 @@ export default function Home() {
   let [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
   const router = useRouter();
 
-  const onAnswer = () => {
+  function onAnswer() {
     // TODO: getAnswer from api by fetch
     setAnswered(true)
   }
 
-  const onNext = () => {
-    setAnswered(false)
+  async function onNext() {
     if (round < 5) {
-      setRound(round + 1)
-      //TODO: get next round info from api
+      const nextRound = round + 1;
+      setRound(nextRound)
+      await getRound(nextRound)
+      setAnswered(false)
     } else {
       // TODO: Go to result page
       router.push('/')
     }
+  }
+
+  async function getRound(round: number, uuidX?: string) {
+    uuidX = uuidX || uuid
+    const guessVideoRes = await (await fetch(`/api/game/guess?uuid=${uuidX}&round=${round}`)).json() as GuessVideo
+    if (guessVideoRes === null) {
+      return //Error
+    }
+    setGuessVideo(guessVideoRes)
   }
 
   useEffect(() => {
@@ -56,13 +67,9 @@ export default function Home() {
         if (res === null) {
           return //Error
         }
-        const uuid = res.uuid
-        latestEp = res.latestEp
-        const guessVideoRes = await (await fetch(`/api/game/guess?uuid=${uuid}&round=1`)).json() as GuessVideo
-        if (guessVideoRes === null) {
-          return //Error
-        }
-        setGuessVideo(guessVideoRes)
+        setUuid(res.uuid)
+        setLatestEp(res.latestEp)
+        await getRound(1, res.uuid)
       }
     }
     createGame()
@@ -119,7 +126,7 @@ export default function Home() {
                 <>
                   seu resultado aqui =)
                   <button
-                    onClick={() => onNext()}
+                    onClick={async () => await onNext()}
                     className={`${styles.cleanButton} ${styles.primary}`}
                   >
                     Próximo Round
