@@ -97,6 +97,10 @@ export default function Home() {
     createGame()
   }, []) // "@ts-expect-error
 
+  function stringDateToSlash(date: string | undefined): string | undefined {
+    return date?.split("-").reverse().join("/")
+  }
+
   return (
     <>
       <Head>
@@ -115,7 +119,7 @@ export default function Home() {
           <RoundDisplay round={round} />
         </Header>
         <main className={styles.main}>
-          <div className={styles.mainExample}>
+          <div className={styles.mainGame}>
             <div className={styles.video}>
               <div className={styles.mainImage}>
                 <div style={{
@@ -126,13 +130,13 @@ export default function Home() {
                 !answered ? guessVideo?.formatted_title : videoResponse?.title
               }</h3>
               <p>{
-                `Data de publicação: ${!answered ? "??/??/????" : videoResponse?.date.split("-").reverse().join("/")}`
+                `Data de publicação: ${!answered ? "??/??/????" : stringDateToSlash(videoResponse?.date)}`
               }</p>
               <a className={`${styles.secondary} ${answered ? "" : styles.hide}`} href={`https://www.youtube.com/watch?v=${videoResponse?.video_id}`}>
                 {answered && "Assistir o vídeo"}
               </a>
             </div>
-            <div className={styles.greenAnswerContainer}>
+            <div className={`${styles.greenAnswerContainer} ${answered ? styles.result : ""}`}>
               {!answered ?
                 <>
                   <SelectDate setDate={setDate} />
@@ -146,7 +150,35 @@ export default function Home() {
                 </>
                 :
                 <>
-                  seu resultado aqui =)
+                  <h2>Resultado</h2>
+
+                  <div>
+                    <h3>📅 {stringDateToSlash(videoResponse?.date)}</h3>
+                    <p>Você adivinhou: <h5>{date.format('DD/MM/YYYY')}</h5></p>
+                    <p>Diferença: <h5>{date.diff(dayjs(videoResponse?.date), 'day')}</h5></p>
+                  </div>
+                  <div>
+                    <h3>💻 {videoResponse?.ep}</h3>
+                    <p>Você adivinhou: <h5>{ep}</h5></p>
+                    <p>Diferença: <h5>{Math.abs(videoResponse?.ep || 1 - ep)}</h5></p>
+                  </div>
+                  <div>
+                    <div className={styles.resultPoints}>
+                      <div className={styles.resultPoints}>
+                        <h4>📅 100</h4><h5>/100</h5>
+                      </div>
+                      <h4>+</h4>
+                      <div className={styles.resultPoints}>
+                        <h4>💻 100</h4><h5>/100</h5>
+                      </div>
+                    </div>
+                    <div className={styles.resultPoints}>
+                      <h4>=</h4>
+                      <div className={styles.resultPoints}>
+                        <h4>🏆 200</h4><h5>/200</h5>
+                      </div>
+                    </div>
+                  </div>
                   <button
                     onClick={async () => await onNext()}
                     className={`${styles.cleanButton} ${styles.primary}`}
