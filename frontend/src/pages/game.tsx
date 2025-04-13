@@ -38,7 +38,21 @@ export default function Home() {
     if (dayjs().diff(date, 'day') && ep === 1) {
       //TODO: make a are you sure you want to guess? 
     }
-    const guessVideoRes = await (await fetch(`/api/game/response?uuid=${uuid}&round=${round}`)).json() as VideoResponse
+    const guessVideoRes = await (await fetch(`/api/game/response`,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+          uuid,
+          round,
+          ep,
+          date,
+        })
+      }
+    )).json() as VideoResponse
     if (guessVideoRes === null) {
       return //Error
     }
@@ -81,7 +95,7 @@ export default function Home() {
       }
     }
     createGame()
-  }, [])
+  }, []) // "@ts-expect-error
 
   return (
     <>
