@@ -111,7 +111,7 @@ export default function Home() {
 							</div>
 							<div className={styles.step}>
 								<p>3 Digite ou selecione o seu palpite do número do episódio</p>
-								<SelectEpisode ep={ep} setEp={setEp} />
+								<SelectEpisode ep={ep} setEp={setEp} latestEp={1723} />
 							</div>
 							<div className={styles.step}>
 								<p>4 Quando estiver pronto, pressione adivinhar</p>

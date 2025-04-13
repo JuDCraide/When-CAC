@@ -39,11 +39,11 @@ const sx = {
 
 interface SelectEpisodeProps {
 	ep: number,
-	setEp: (value: SetStateAction<number>) => void
+	setEp: (value: SetStateAction<number>) => void,
+	latestEp: number,
 }
 
-const SelectEpisode: React.FC<SelectEpisodeProps> = ({ ep, setEp }) => {
-	const latestEp: number = 1723
+const SelectEpisode: React.FC<SelectEpisodeProps> = ({ ep, setEp, latestEp }) => {
 	const setEpisode = (n: number) => {
 		if (n > latestEp) {
 			n = latestEp

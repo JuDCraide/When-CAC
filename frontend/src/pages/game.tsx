@@ -26,7 +26,7 @@ const geistMono = Geist_Mono({
 export default function Home() {
   let [latestEp, setLatestEp] = useState(1);
   let [uuid, setUuid] = useState("");
-  let [ep, setEp] = useState(1);
+  let [ep, setEp] = useState(-1);
   let [date, setDate] = useState(dayjs());
   let [answered, setAnswered] = useState(false);
   let [round, setRound] = useState(1);
@@ -34,8 +34,12 @@ export default function Home() {
   let [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
   const router = useRouter();
 
-  function onAnswer() {
-    // TODO: getAnswer from api by fetch
+  async function onAnswer() {
+    const guessVideoRes = await (await fetch(`/api/game/response?uuid=${uuid}&round=${round}`)).json() as VideoResponse
+    if (guessVideoRes === null) {
+      return //Error
+    }
+    setVideoResponse(guessVideoRes)
     setAnswered(true)
   }
 
@@ -51,9 +55,9 @@ export default function Home() {
     }
   }
 
-  async function getRound(round: number, uuidX?: string) {
-    uuidX = uuidX || uuid
-    const guessVideoRes = await (await fetch(`/api/game/guess?uuid=${uuidX}&round=${round}`)).json() as GuessVideo
+  async function getRound(round: number, uuidString?: string) {
+    uuidString = uuidString || uuid
+    const guessVideoRes = await (await fetch(`/api/game/guess?uuid=${uuidString}&round=${round}`)).json() as GuessVideo
     if (guessVideoRes === null) {
       return //Error
     }
@@ -114,9 +118,9 @@ export default function Home() {
               {!answered ?
                 <>
                   <SelectDate setDate={setDate} />
-                  <SelectEpisode ep={ep} setEp={setEp} />
+                  <SelectEpisode ep={ep} setEp={setEp} latestEp={latestEp}/>
                   <button
-                    onClick={() => onAnswer()}
+                    onClick={async () => await onAnswer()}
                     className={`${styles.cleanButton} ${styles.primary}`}
                   >
                     Adivinhar
