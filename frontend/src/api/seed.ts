@@ -1,4 +1,5 @@
 const LATEST_EP = 1723;
+import * as random from "random-seed";
 
 interface decodedSeed {
     start_timestamp: number;
@@ -29,8 +30,8 @@ export default class Seed {
     }
 
     get_episodes(): number[] {
-        //TODO: Make function to generate random numbers
-        return [1, 2, 3, 4, 5]
+        var rand = random.create(this.encoded_seed);
+        return Array.from({ length: 5 }, () => rand.intBetween(1, this.latest_ep));
     }
 
     decode_seed(): decodedSeed {
