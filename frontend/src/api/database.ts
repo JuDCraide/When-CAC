@@ -2,10 +2,12 @@ import videos from '../../public/videos_info.json'
 import { ObjectId } from 'mongodb';
 import * as mongoDB from "mongodb";
 import Game from './game';
+import fs from 'fs';
+import path from 'path';
 
 export interface GuessVideo {
     formatted_title: string,
-    //image_url: string
+    image_url: string
     video_id: string,
 }
 
@@ -62,7 +64,8 @@ async function getGuessVideo(uuid: string, round: number) {
                     if (video) {
                         guessVideo = {
                             formatted_title: video.formatted_title,
-                            video_id: video.video_id
+                            video_id: video.video_id,
+                            image_url: getImageAsBase64(`${video.video_id}.jpg`)
                         };
                     }
                 }
@@ -107,6 +110,12 @@ async function getResponseVideo(uuid: string, round: number) {
         }
     }
     return responseVideo;
+}
+
+export function getImageAsBase64(relativePath: string): string {
+    const filePath = path.join(process.cwd(), 'thumbnails/', relativePath);
+    const fileData = fs.readFileSync(filePath);
+    return `data:image/${path.extname(filePath).slice(1)};base64,${fileData.toString('base64')}`;
 }
 
 export { getGuessVideo, getResponseVideo };
