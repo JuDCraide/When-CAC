@@ -21,6 +21,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+interface RoundResult {
+  ep: {
+    guess: number,
+    res: number,
+    diff: number,
+    points: number,
+  },
+  date: {
+    guess: string,
+    res: string,
+    diff: number,
+    points: number,
+  },
+  roundTotal: number,
+}
+
+interface Result {
+  rounds: RoundResult[],
+  epTotal: number,
+  dateTotal: number,
+  totalPoints: number,
+}
+
 export default function Home() {
   const [latestEp, setLatestEp] = useState(1);
   const [uuid, setUuid] = useState("");
@@ -28,11 +51,12 @@ export default function Home() {
   const [date, setDate] = useState(dayjs());
   const [answered, setAnswered] = useState(false);
   const [round, setRound] = useState(1);
-  const [totalPoints, setTotalPoints] = useState(0);
-  const [currEpPoints, setCurrEpPoints] = useState(0);
-  const [currDatePoints, setCurrDatePoints] = useState(0);
+  // const [totalPoints, setTotalPoints] = useState(0);
+  // const [currEpPoints, setCurrEpPoints] = useState(0);
+  // const [currDatePoints, setCurrDatePoints] = useState(0);
   const [guessVideo, setGuessVideo] = useState<null | GuessVideo>(null);
   const [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
+  const [result, setResult] = useState<Result>({ rounds: [], epTotal: 0, dateTotal: 0, totalPoints: 0 });
 
   const router = useRouter();
 
@@ -59,9 +83,29 @@ export default function Home() {
       return //Error
     }
     setVideoResponse(guessVideoRes.responseVideo)
-    setCurrDatePoints(guessVideoRes.points.date)
-    setCurrEpPoints(guessVideoRes.points.ep)
-    setTotalPoints(totalPoints + guessVideoRes.points.ep + guessVideoRes.points.date)
+    setResult({
+      rounds: [...result.rounds, {
+        ep: {
+          guess: ep,
+          res: guessVideoRes.responseVideo.ep,
+          diff: Math.abs(guessVideoRes.responseVideo.ep - ep),
+          points: guessVideoRes.points.ep,
+        },
+        date: {
+          guess: date.format('DD/MM/YYYY'),
+          res: stringDateToSlash(guessVideoRes.responseVideo.date),
+          diff: Math.abs(date.diff(dayjs(videoResponse?.date), 'day')),
+          points: guessVideoRes.points.date,
+        },
+        roundTotal:  guessVideoRes.points.ep +  guessVideoRes.points.date,
+      }],
+      epTotal: result.epTotal + guessVideoRes.points.ep,
+      dateTotal: result.dateTotal + guessVideoRes.points.date,
+      totalPoints: result.totalPoints + guessVideoRes.points.ep + guessVideoRes.points.date
+    })
+    // setCurrDatePoints(guessVideoRes.points.date)
+    // setCurrEpPoints(guessVideoRes.points.ep)
+    // setTotalPoints(totalPoints + guessVideoRes.points.ep + guessVideoRes.points.date)
     setAnswered(true)
   }
 
@@ -71,8 +115,8 @@ export default function Home() {
       setRound(nextRound)
       await getRound(nextRound)
       setAnswered(false)
-      setCurrDatePoints(0)
-      setCurrEpPoints(0)
+      // setCurrDatePoints(0)
+      // setCurrEpPoints(0)
     } else {
       // TODO: Go to result page
       router.push('/')
@@ -104,7 +148,7 @@ export default function Home() {
     createGame()
   }, []) // "@ts-expect-error
 
-  function stringDateToSlash(date: string | undefined): string | undefined {
+  function stringDateToSlash(date: string): string {
     return date?.split("-").reverse().join("/")
   }
 
@@ -122,7 +166,7 @@ export default function Home() {
           backgroundImage: `url(${bg.src})`,
         }}
       >
-        <Header round={round} points={totalPoints} />
+        <Header round={round} points={result.totalPoints} />
         <main className={styles.main}>
           <div className={styles.mainGame}>
             <div className={styles.video}>
@@ -135,7 +179,7 @@ export default function Home() {
                 !answered ? guessVideo?.formatted_title : videoResponse?.title
               }</h3>
               <p>{
-                `Data de publicação: ${!answered ? "??/??/????" : stringDateToSlash(videoResponse?.date)}`
+                `Data de publicação: ${!answered ? "??/??/????" : result.rounds[round]?.date.res}`
               }</p>
               <a className={`${styles.secondary} ${answered ? "" : styles.hide}`} href={`https://www.youtube.com/watch?v=${videoResponse?.video_id}`}>
                 {answered && "Assistir o vídeo"}
@@ -157,29 +201,29 @@ export default function Home() {
                 <>
                   {/* <h2>Resultado</h2> */}
                   <div>
-                    <h3>📅 {stringDateToSlash(videoResponse?.date)}</h3>
-                    <p>Você adivinhou: <h5>{date.format('DD/MM/YYYY')}</h5></p>
-                    <p>Diferença: <h5>{Math.abs(date.diff(dayjs(videoResponse?.date), 'day'))}</h5></p>
+                    <h3>📅 {result.rounds[round - 1]?.date.res}</h3>
+                    <p>Você adivinhou: <h5>{result.rounds[round - 1]?.date.guess}</h5></p>
+                    <p>Diferença: <h5>{result.rounds[round - 1]?.date.diff}</h5></p>
                   </div>
                   <div>
-                    <h3>💻 Ep. {videoResponse?.ep}</h3>
-                    <p>Você adivinhou: <h5>Ep. {ep}</h5></p>
-                    <p>Diferença: <h5>{Math.abs(videoResponse?.ep || 1 - ep)}</h5></p>
+                    <h3>💻 Ep. {result.rounds[round - 1]?.ep.res}</h3>
+                    <p>Você adivinhou: <h5>Ep. {result.rounds[round - 1]?.ep.guess}</h5></p>
+                    <p>Diferença: <h5>{result.rounds[round - 1]?.ep.diff}</h5></p>
                   </div>
                   <div>
                     <div className={styles.resultPoints}>
                       <div className={styles.resultPoints}>
-                        <h4>📅 {currDatePoints}</h4><h5>/100</h5>
+                        <h4>📅 {result.rounds[round - 1]?.date.points}</h4><h5>/100</h5>
                       </div>
                       <h4>+</h4>
                       <div className={styles.resultPoints}>
-                        <h4>💻 {currEpPoints}</h4><h5>/100</h5>
+                        <h4>💻 {result.rounds[round - 1]?.ep.points}</h4><h5>/100</h5>
                       </div>
                     </div>
                     <div className={styles.resultPoints}>
                       <h4>=</h4>
                       <div className={styles.resultPoints}>
-                        <h4>🏆 {totalPoints}</h4><h5>/200</h5>
+                        <h4>🏆 {result.rounds[round - 1]?.roundTotal}</h4><h5>/200</h5>
                       </div>
                     </div>
                   </div>
