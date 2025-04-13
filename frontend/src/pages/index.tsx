@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import bg from "../../public/images/bg-dark.png";
@@ -24,8 +23,8 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-	let [answerReveal, setAnswerRevel] = useState(false);
-	let video = {
+	const [answerReveal, setAnswerReveal] = useState(false);
+	const video = {
 		title: "ESTRAGARAM O CHURRASCO - Ep.1074",
 		formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
 		ep: 1074,
@@ -35,6 +34,7 @@ export default function Home() {
 
 	const [ep, setEp] = useState(1);
 	const [date, setDate] = useState(dayjs());
+	console.log(date);
 
 	return (
 		<>
@@ -66,7 +66,7 @@ export default function Home() {
 							<div className={styles.greenContainer}>
 								<span>Acha que sabe a resposta?</span>
 								<button
-									onClick={() => setAnswerRevel(!answerReveal)}
+									onClick={() => setAnswerReveal(!answerReveal)}
 									className={`${styles.cleanbutton} ${styles.primary}`}
 								>
 									{

@@ -8,7 +8,7 @@ export default async function handler(
 	if (req.method === 'GET') {
 		console.log(typeof (req.query?.round))
 		if (typeof (req.query?.uuid) == 'string' && typeof (req.query?.round) == 'string') {
-			let round = Number(req.query?.round);
+			const round = Number(req.query?.round);
 			const guessVideo = await getGuessVideo(req.query.uuid, round);
 			if (guessVideo)
 				res.status(200).json(guessVideo);

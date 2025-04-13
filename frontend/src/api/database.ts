@@ -1,4 +1,3 @@
-import videos from '../../public/videos_info.json'
 import { ObjectId } from 'mongodb';
 import * as mongoDB from "mongodb";
 import Game from './game';
@@ -18,13 +17,13 @@ export interface VideoResponse {
     date: string
 }
 
-interface Video {
-    title: string,
-    formatted_title: string,
-    ep: number,
-    video_id: string,
-    date: string
-}
+// interface Video {
+//     title: string,
+//     formatted_title: string,
+//     ep: number,
+//     video_id: string,
+//     date: string
+// }
 
 export async function createGame(game: Game) {
     let createdId = null;

@@ -2,7 +2,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
-import styles from "styles.module.css";
 import { SetStateAction } from 'react';
 import dayjs from 'dayjs';
 

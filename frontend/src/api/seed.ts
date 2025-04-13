@@ -30,7 +30,7 @@ export default class Seed {
     }
 
     get_episodes(): number[] {
-        var rand = random.create(this.encoded_seed);
+        const rand = random.create(this.encoded_seed);
         return Array.from({ length: 5 }, () => rand.intBetween(1, this.latest_ep));
     }
 

@@ -2,7 +2,6 @@ import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Game.module.css";
 import bg from "../../public/images/bg-dark.png";
-import thumb from "../../public/images/_1lRF7UL0mg.jpg"
 import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 
@@ -60,6 +59,7 @@ export default function Home() {
   }
 
   async function getRound(round: number, uuidString?: string) {
+    console.log("getRound")
     uuidString = uuidString || uuid
     const guessVideoRes = await (await fetch(`/api/game/guess?uuid=${uuidString}&round=${round}`)).json() as GuessVideo
     if (guessVideoRes === null) {

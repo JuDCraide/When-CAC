@@ -1,5 +1,4 @@
 import { ObjectId } from 'mongodb';
-import * as Database from "./database";
 import Seed from "./seed";
 
 export default class Game {
