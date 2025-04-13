@@ -51,9 +51,6 @@ export default function Home() {
   const [date, setDate] = useState(dayjs());
   const [answered, setAnswered] = useState(false);
   const [round, setRound] = useState(1);
-  // const [totalPoints, setTotalPoints] = useState(0);
-  // const [currEpPoints, setCurrEpPoints] = useState(0);
-  // const [currDatePoints, setCurrDatePoints] = useState(0);
   const [guessVideo, setGuessVideo] = useState<null | GuessVideo>(null);
   const [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
   const [result, setResult] = useState<Result>({ rounds: [], epTotal: 0, dateTotal: 0, totalPoints: 0 });
@@ -94,7 +91,7 @@ export default function Home() {
         date: {
           guess: date.format('DD/MM/YYYY'),
           res: stringDateToSlash(guessVideoRes.responseVideo.date),
-          diff: Math.abs(date.diff(dayjs(videoResponse?.date), 'day')),
+          diff: Math.abs(date.diff(dayjs(guessVideoRes.responseVideo.date), 'day')),
           points: guessVideoRes.points.date,
         },
         roundTotal:  guessVideoRes.points.ep +  guessVideoRes.points.date,
@@ -103,9 +100,6 @@ export default function Home() {
       dateTotal: result.dateTotal + guessVideoRes.points.date,
       totalPoints: result.totalPoints + guessVideoRes.points.ep + guessVideoRes.points.date
     })
-    // setCurrDatePoints(guessVideoRes.points.date)
-    // setCurrEpPoints(guessVideoRes.points.ep)
-    // setTotalPoints(totalPoints + guessVideoRes.points.ep + guessVideoRes.points.date)
     setAnswered(true)
   }
 
@@ -115,8 +109,6 @@ export default function Home() {
       setRound(nextRound)
       await getRound(nextRound)
       setAnswered(false)
-      // setCurrDatePoints(0)
-      // setCurrEpPoints(0)
     } else {
       // TODO: Go to result page
       router.push('/')
@@ -179,7 +171,7 @@ export default function Home() {
                 !answered ? guessVideo?.formatted_title : videoResponse?.title
               }</h3>
               <p>{
-                `Data de publicação: ${!answered ? "??/??/????" : result.rounds[round]?.date.res}`
+                `Data de publicação: ${!answered ? "??/??/????" : result.rounds[round- 1]?.date.res}`
               }</p>
               <a className={`${styles.secondary} ${answered ? "" : styles.hide}`} href={`https://www.youtube.com/watch?v=${videoResponse?.video_id}`}>
                 {answered && "Assistir o vídeo"}
