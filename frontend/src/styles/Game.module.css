@@ -176,9 +176,16 @@ button.secondary {
 }
 
 .hide,
-.video .hide {
+.video .hide,
+.video .hide:hover {
   background: transparent;
   border-color: transparent;
+  border:0px;
+  cursor: default;
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  visibility: hidden;
 }
 
 @media (hover: hover) and (pointer: fine) {

@@ -94,7 +94,7 @@ export default function Home() {
           diff: Math.abs(date.diff(dayjs(guessVideoRes.responseVideo.date), 'day')),
           points: guessVideoRes.points.date,
         },
-        roundTotal:  guessVideoRes.points.ep +  guessVideoRes.points.date,
+        roundTotal: guessVideoRes.points.ep + guessVideoRes.points.date,
       }],
       epTotal: result.epTotal + guessVideoRes.points.ep,
       dateTotal: result.dateTotal + guessVideoRes.points.date,
@@ -171,9 +171,12 @@ export default function Home() {
                 !answered ? guessVideo?.formatted_title : videoResponse?.title
               }</h3>
               <p>{
-                `Data de publicação: ${!answered ? "??/??/????" : result.rounds[round- 1]?.date.res}`
+                `Data de publicação: ${!answered ? "??/??/????" : result.rounds[round - 1]?.date.res}`
               }</p>
-              <a className={`${styles.secondary} ${answered ? "" : styles.hide}`} href={`https://www.youtube.com/watch?v=${videoResponse?.video_id}`}>
+              <a
+                className={`${styles.secondary} ${answered ? "" : styles.hide}`}
+                href={answered && videoResponse != null ? `https://www.youtube.com/watch?v=${videoResponse?.video_id}` : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
+              >
                 {answered && "Assistir o vídeo"}
               </a>
             </div>

@@ -153,9 +153,16 @@ button.secondary {
   min-width: 180px;
 }
 
-.hide {
+.hide,
+.hide:hover {
   background: transparent;
   border-color: transparent;
+  border:0px;
+  cursor: default;
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  visibility: hidden;
 }
 
 .emoji {

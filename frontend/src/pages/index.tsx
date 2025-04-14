@@ -92,7 +92,10 @@ export default function Home() {
 							<p>Data de publicação: {
 								!answerReveal ? "??/??/????" : video.date.split("-").reverse().join("/")
 							}</p>
-							<a className={answerReveal ? styles.secondary : styles.hide} href={`https://www.youtube.com/watch?v=${video.video_id}`}>
+							<a
+								className={answerReveal ? styles.secondary : styles.hide}
+								href={answerReveal ? `https://www.youtube.com/watch?v=${video.video_id}` : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
+							>
 								{answerReveal && "Assistir o vídeo"}
 							</a>
 						</div>
