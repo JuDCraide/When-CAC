@@ -1,0 +1,97 @@
+{
+    rounds: [
+        {
+            ep: {
+                guess: 1462,
+                res: 1494,
+                diff: 32,
+                points: 81
+            },
+            date: {
+                guess: "18/04/2025",
+                res: "06/10/2020",
+                diff: 1655,
+                points: 3
+            },
+            roundTotal: 84,
+            id: "",
+            title: "ELA TROCOU A COR DA SALA DE JANTAR! - Ep. 1494",
+            image: ""
+        },
+        {
+            ep: {
+                guess: 546,
+                res: 1057,
+                diff: 511,
+                points: 3
+            },
+            date: {
+                guess: "18/04/2025",
+                res: "13/09/2017",
+                diff: 2774,
+                points: 0
+            },
+            roundTotal: 3,
+            id: "",
+            title: "TOCA RAUL! - Ep. 1057",
+            image: ""
+        },
+        {
+            ep: {
+                guess: 270,
+                res: 90,
+                diff: 180,
+                points: 30
+            },
+            date: {
+                guess: "18/04/2025",
+                res: "31/03/2014",
+                diff: 4036,
+                points: 0
+            },
+            roundTotal: 30,
+            id: "",
+            title: "QUERO SER ATRIZ - Ep. 90",
+            image: ""
+        },
+        {
+            ep: {
+                guess: 1164,
+                res: 963,
+                diff: 201,
+                points: 25
+            },
+            date: {
+                guess: "18/04/2025",
+                res: "24/04/2017",
+                diff: 2916,
+                points: 0
+            },
+            roundTotal: 25,
+            id: "",
+            title: "PRESSÃO - Ep. 963",
+            image: ""
+        },
+        {
+            ep: {
+                guess: 996,
+                res: 706,
+                diff: 290,
+                points: 12
+            },
+            date: {
+                guess: "18/04/2025",
+                res: "03/04/2016",
+                diff: 3302,
+                points: 0
+            },
+            roundTotal: 12,
+            id: "",
+            title: "RUMO À FRANÇA!- Ep.706",
+            image: ""
+        }
+    ],
+    epTotal: 151,
+    dateTotal: 3,
+    totalPoints: 154
+}

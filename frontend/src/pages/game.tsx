@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-interface RoundResult {
+export interface RoundResult {
   ep: {
     guess: number,
     res: number,
@@ -36,9 +36,12 @@ interface RoundResult {
     points: number,
   },
   roundTotal: number,
+  title: string,
+  image: string,
+  id: string,
 }
 
-interface Result {
+export interface Result {
   rounds: RoundResult[],
   epTotal: number,
   dateTotal: number,
@@ -98,12 +101,17 @@ export default function Home() {
           points: guessVideoRes.points.date,
         },
         roundTotal: guessVideoRes.points.ep + guessVideoRes.points.date,
+        title: guessVideoRes.responseVideo.title,
+        image: guessVideo?.image_url || "",
+        id: guessVideoRes.responseVideo.video_id
       }],
       epTotal: result.epTotal + guessVideoRes.points.ep,
       dateTotal: result.dateTotal + guessVideoRes.points.date,
       totalPoints: result.totalPoints + guessVideoRes.points.ep + guessVideoRes.points.date
     })
     setAnswered(true)
+    console.log(guessVideo?.image_url)
+    console.log(result)
   }
 
   async function onNext() {
@@ -114,12 +122,16 @@ export default function Home() {
       setAnswered(false)
     } else {
       // TODO: Go to result page
-      router.push('/')
+      router.push({
+        pathname:'/end',
+        query: {
+          results: JSON.stringify(result)
+        }
+      })
     }
   }
 
   async function getRound(round: number, uuidString?: string) {
-    console.log("getRound")
     uuidString = uuidString || uuid
     const guessVideoRes = await (await fetch(`/api/game/guess?uuid=${uuidString}&round=${round}`)).json() as GuessVideo
     if (guessVideoRes === null) {
@@ -147,6 +159,8 @@ export default function Home() {
   function stringDateToSlash(date: string): string {
     return date?.split("-").reverse().join("/")
   }
+
+  console.log(result)
 
   return (
     <>

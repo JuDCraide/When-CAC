@@ -7,6 +7,18 @@
   flex-direction: row;
 }
 
+.roundDisplay .roundNumber,
+.roundDisplay .number,
+.cleanButton {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
 .roundDisplay .number {
   border-radius: 50%;
   height: 32px;
@@ -20,6 +32,13 @@
   height: 40px;
   width: 40px;
   margin: 0.25rem 0.4rem;
-  border: 1px solid var(--white);
-  
+  border: 1px solid var(--white);  
 }
+
+.roundDisplay,
+.roundDisplay div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
