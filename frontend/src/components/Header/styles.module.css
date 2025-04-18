@@ -11,6 +11,7 @@
   padding-right: 2.5rem;
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   z-index: 999;
+  gap: 8px;
 }
 
 .header div {
@@ -31,4 +32,16 @@
 
 .header .logo{
   justify-content: flex-start;
+  display: flex;
+}
+
+.header .logo,
+.cleanButton {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }

@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import bg from "../../../public/images/bg-dark.png";
 import RoundDisplay from "./RoundDisplay";
 import PointsDisplay from "./PointsDisplay";
+import { useRouter } from "next/router";
 
 interface HeaderProps {
 	round?: number | null,
@@ -10,13 +11,14 @@ interface HeaderProps {
 }
 
 export default function Header({ round = null, points = null }: HeaderProps) {
+	const router = useRouter();
 	return (
 		<header className={styles.header}
 			style={{
 				backgroundImage: `url(${bg.src})`,
 			}}
 		>
-			<div className={styles.logo}>
+			<button className={`${styles.cleanButton} ${styles.logo}`} onClick={() => router.push('/')}>
 				<Image
 					src="/images/logo-no-bg.png"
 					alt="CAC logo"
@@ -25,7 +27,7 @@ export default function Header({ round = null, points = null }: HeaderProps) {
 					priority
 				/>
 				<h1><b>When</b> CAC</h1>
-			</div>
+			</button>
 			<div>
 				{round !== null && <RoundDisplay round={round} />}
 			</div>
