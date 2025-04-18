@@ -10,6 +10,7 @@ import Header from "../components/Header"
 import { useRouter } from "next/router";
 import { GameData } from "./api/game";
 import { GuessVideo, ResultResponse, VideoResponse } from "@/api/database";
+import { useSearchParams } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,8 @@ export default function Home() {
   const [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
   const [result, setResult] = useState<Result>({ rounds: [], epTotal: 0, dateTotal: 0, totalPoints: 0 });
 
+  const searchParams = useSearchParams()
+  const seed = searchParams.get('seed')
   const router = useRouter();
 
   async function onAnswer() {
@@ -128,7 +131,8 @@ export default function Home() {
   useEffect(() => {
     async function createGame() {
       if (guessVideo === null) {
-        const res = await (await fetch('/api/game')).json() as GameData
+        const path = `/api/game${seed ? `?seed=${seed}` : ""}`
+        const res = await (await fetch(path)).json() as GameData
         if (res === null) {
           return //Error
         }

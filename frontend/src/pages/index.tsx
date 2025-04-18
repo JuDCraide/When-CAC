@@ -5,9 +5,11 @@ import bg from "../../public/images/bg-dark.png";
 import thumb from "../../public/images/_1lRF7UL0mg.jpg"
 import { useState } from "react";
 import dayjs from 'dayjs';
+import { useRouter } from "next/router";
 
-import { SelectEpisode, SelectDate } from "../components/Inputs"
+import { SelectEpisode, SelectDate, SeedInput } from "../components/Inputs"
 import Header from "../components/Header"
+import SeedDialog from "@/components/SeedDialog";
 
 //TODO: make API call
 const LATEST_EP = 1723;
@@ -34,7 +36,25 @@ export default function Home() {
 
 	const [ep, setEp] = useState(1);
 	const [date, setDate] = useState(dayjs());
-	console.log(date);
+	const router = useRouter();
+
+	const [openSeedDialog, setOpenSeedDialog] = useState(false);
+
+	function onClick(seeded: boolean = false) {
+		if (seeded) {
+			setOpenSeedDialog(true)
+		} else {
+			router.push('/game')
+		}
+	}
+
+	const onCloseDialog = () => {
+		setOpenSeedDialog(false)
+	}
+
+	function onStartGame(seed: string){		
+		router.push(`/game?seed=${seed}`)
+	}
 
 	return (
 		<>
@@ -100,6 +120,20 @@ export default function Home() {
 							</a>
 						</div>
 					</div>
+					<div className={styles.play}>
+						<button className={`${styles.cleanButton} ${styles.playItem}`} onClick={() => onClick()}>
+							<div>
+								<h3>Jogar aleatório</h3>
+								<span className={styles.emoji}>🔄️</span>
+							</div>
+						</button>
+						<button className={`${styles.cleanButton} ${styles.playItem}`} onClick={() => onClick(true)}>
+							<div>
+								<h3>Jogar seeded</h3>
+								<span className={styles.emoji}>🌱</span>
+							</div>
+						</button>
+					</div>
 					<div className={styles.greenContainer}>
 						<h2>Como jogar?</h2>
 						<div className={styles.instructions}>
@@ -136,6 +170,8 @@ export default function Home() {
 				<footer className={styles.footer}>
 					Feito com ♥ por Júlia e Leo
 				</footer>
+				
+				<SeedDialog openSeedDialog={openSeedDialog} onCloseDialog={onCloseDialog} onPlayGame={onStartGame} />
 			</div>
 		</>
 	);

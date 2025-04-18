@@ -2,7 +2,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
-import { SetStateAction } from 'react';
+import { SetStateAction, useState } from 'react';
 import dayjs from 'dayjs';
 
 const sx = {
@@ -96,7 +96,7 @@ const SelectEpisode: React.FC<SelectEpisodeProps> = ({ ep, setEp, latestEp }) =>
 					type="number"
 					value={ep}
 					onChange={(e) => setEpisode(Number(e.target.value))}
-					style={{ marginTop: "0.8em",  width: "100%" }}
+					style={{ marginTop: "0.8em", width: "100%" }}
 				/>
 			</fieldset>
 		</ThemeProvider>
@@ -132,4 +132,32 @@ const SelectDate: React.FC<SelectDateProps> = ({ setDate }) => {
 	);
 }
 
-export { SelectEpisode, SelectDate };
+interface SeedDialogProps {
+  seed: string,
+  setSeed: (value: SetStateAction<string>) => void,
+}
+
+const SeedInput: React.FC<SeedDialogProps> = ({seed, setSeed}) => {
+
+	return (
+		<ThemeProvider
+			theme={createTheme({
+				palette: {
+					mode: 'dark',
+				},
+			})}>
+			<div style={{ marginTop: "1em" }}>
+				<TextField
+					id="outlined-controlled"
+					label="Seed"
+					variant="outlined" sx={sx}
+					value={seed}
+					onChange={(e) => setSeed(e.target.value)}
+					style={{ marginBottom: "0.8em", width: "100%" }}
+				/>
+			</div>
+		</ThemeProvider>
+	);
+}
+
+export { SelectEpisode, SelectDate, SeedInput };

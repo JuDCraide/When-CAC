@@ -157,7 +157,7 @@ button.secondary {
 .hide:hover {
   background: transparent;
   border-color: transparent;
-  border:0px;
+  border: 0px;
   cursor: default;
   width: 0;
   min-width: 0;
@@ -167,6 +167,41 @@ button.secondary {
 
 .emoji {
   font-size: 1.5em;
+}
+
+.play {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 2rem;
+}
+
+.playItem {
+  height: 180px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(/images/background.png);
+}
+
+.playItem>div {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .6);
+  border-radius: 16px;
+}
+
+.playItem h3 {
+  font-size: 2rem;
+}
+
+.playItem>div:hover {
+  background-color: rgba(0, 0, 0, .4);
 }
 
 .main>.greenContainer {
