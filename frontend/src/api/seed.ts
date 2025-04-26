@@ -36,7 +36,11 @@ export default class Seed {
 
     decode_seed(): decodedSeed {
         // TODO: validate JSON format 
-        return JSON.parse(Buffer.from(this.encoded_seed, 'base64').toString('ascii')) as decodedSeed
+        const seed = JSON.parse(Buffer.from(this.encoded_seed, 'base64').toString('ascii'))
+        if(!this.isSeedValid(seed)){
+            throw Error("Invalid Seed")
+        }
+        return seed as decodedSeed
     }
 
     encode_seed(): string {
@@ -44,6 +48,19 @@ export default class Seed {
             latest_ep: this.latest_ep,
             start_timestamp: this.start_timestamp,
         })).toString('base64');
+    }
+
+    isSeedValid(value: object): value is Seed {
+        const keys = Object.keys(value)
+        const requiredKeys = Object.keys(Seed)
+    
+        if (typeof value !== 'object' || value === null)
+            return false;
+    
+        return (
+            requiredKeys.every(key => key in value)                              //  Ensure all required keys are present
+            && (Object.keys(value) as (keyof Seed)[]).every(key => keys.includes(key))    //  Ensure no undefined keys are present
+        );
     }
 
 }
