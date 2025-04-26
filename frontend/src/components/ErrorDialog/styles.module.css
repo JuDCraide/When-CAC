@@ -1,0 +1,85 @@
+.greenContainer {
+  background-color: var(--green);
+}
+
+.whiteText {
+  color: var(--white);
+}
+
+.whiteText h3 {
+  font-weight: 600;
+  margin-right: 6rem;
+}
+
+.cleanButton {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.greenContainer button.primary,
+.greenContainer button.secondary {
+  width: fit-content;
+}
+
+a.primary,
+a.secondary,
+button.primary,
+button.secondary {
+  appearance: none;
+  border-radius: 128px;
+  height: 48px;
+  padding: 0 20px;
+  border: none;
+  border: 2px solid transparent;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    filter 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  width: 100%;
+}
+
+a.primary,
+button.primary {
+  background: var(--darker-green);
+  color: var(--white);
+  gap: 4px;
+}
+
+a.secondary,
+button.secondary {
+  background-color: var(--dark-green);
+  border-color: var(--green);
+  color: var(--white);
+  min-width: 180px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  a.primary:hover,
+  button.primary:hover {
+    background: var(--button-primary-hover);
+    /* filter: brightness(80%); */
+    border-color: transparent;
+  }
+
+  a.secondary:hover,
+  button.secondary:hover {
+    /* background: var(--button-secondary-hover); */
+    background-color: var(--green);
+    color: var(--white);
+    border-color: transparent;
+  }
+}

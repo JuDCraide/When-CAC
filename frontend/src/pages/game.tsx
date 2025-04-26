@@ -12,6 +12,7 @@ import { GameData } from "./api/game";
 import { GuessVideo, ResultResponse, VideoResponse } from "@/api/database";
 import { useSearchParams } from "next/navigation";
 import { stringDateToSlash } from "@/utils/stringDateToSlash";
+import ErrorDialog from "@/components/ErrorDialog";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,9 +62,18 @@ export default function Home() {
   const [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
   const [result, setResult] = useState<Result>({ rounds: [], epTotal: 0, dateTotal: 0, totalPoints: 0, seed: "" });
 
+  const [openErrorDialog, setOpenErrorDialog] = useState(false);
+  const [error, setError] = useState("");
+
+
   const searchParams = useSearchParams()
   const seed = searchParams.get('seed')
   const router = useRouter();
+
+  function handleError(err: string) {
+    setError(err)
+    setOpenErrorDialog(true)
+  }
 
   async function onAnswer() {
     if (dayjs().diff(date, 'day') && ep === 1) {
@@ -83,9 +93,10 @@ export default function Home() {
           date,
         })
       }
-    )).json() as ResultResponse
-    if (guessVideoRes === null) {
-      return //Error
+    )).json() as ResultResponse | string
+    if (typeof guessVideoRes === 'string') {
+      //Error      
+      return handleError(guessVideoRes)
     }
     setVideoResponse(guessVideoRes.responseVideo)
     setResult({
@@ -125,7 +136,7 @@ export default function Home() {
       setAnswered(false)
     } else {
       router.push({
-        pathname:'/end',
+        pathname: '/end',
         query: {
           results: JSON.stringify(result)
         }
@@ -135,9 +146,10 @@ export default function Home() {
 
   async function getRound(round: number, uuidString?: string) {
     uuidString = uuidString || uuid
-    const guessVideoRes = await (await fetch(`/api/game/guess?uuid=${uuidString}&round=${round}`)).json() as GuessVideo
-    if (guessVideoRes === null) {
-      return //Error
+    const guessVideoRes = await (await fetch(`/api/game/guess?uuid=${uuidString}&round=${round}`)).json() as GuessVideo | string
+    if (typeof guessVideoRes === 'string') {
+      //Error      
+      return handleError(guessVideoRes)
     }
     setGuessVideo(guessVideoRes)
   }
@@ -146,10 +158,13 @@ export default function Home() {
     async function createGame() {
       if (guessVideo === null) {
         const path = `/api/game${seed ? `?seed=${seed}` : ""}`
-        const res = await (await fetch(path)).json() as GameData
-        if (res === null) {
-          return //Error
+        const rawRes = await fetch(path)
+        if (rawRes.status !== 200) {
+          const error = await rawRes.json()
+          //Error
+          return handleError(error.message)
         }
+        const res = await rawRes.json() as GameData
         setResult({
           ...result,
           seed: res.seed,
@@ -251,6 +266,8 @@ export default function Home() {
             </div>
           </div>
         </main>
+
+        <ErrorDialog openErrorDialog={openErrorDialog} seed="{result.seed} "error={error} />
       </div>
     </>
   );

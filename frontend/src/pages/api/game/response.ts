@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getResponseVideo, ResultResponse } from '../../../api/database';
+import { APIError } from "./index";
 
 class VideoResponseReq {
 	uuid: string = "";
@@ -11,7 +12,7 @@ class VideoResponseReq {
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<ResultResponse | null>,
+	res: NextApiResponse<ResultResponse | APIError>,
 ) {
 	if (req.method === 'POST') {
 		console.log(typeof (req.query?.round))
@@ -20,12 +21,12 @@ export default async function handler(
 			if (responseVideo)
 				res.status(200).json(responseVideo);
 			else
-				res.status(404).send(null);
+				res.status(404).send({ message: "Not Found" });
 		} else {
-			res.status(400).send(null);
+			res.status(400).send({ message: "Bad Request" });
 		}
 	} else {
-		res.status(405).send(null);
+		res.status(405).send({ message: "Method Not Allowed" });
 	}
 
 }

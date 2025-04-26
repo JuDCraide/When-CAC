@@ -9,15 +9,25 @@ export type GameData = {
   seed: string;
 };
 
+export type APIError = {
+  message: string;
+};
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<GameData | null>,
+  res: NextApiResponse<GameData | APIError>,
 ) {
   if (req.method === 'GET') {
     let game;
     if (typeof (req.query?.seed) == 'string') {
-      game = new Game(req.query.seed);
+      try {
+        game = new Game(req.query.seed);
+      } catch (err) {
+        if (err !== null && err !== undefined && (err as Error).message) {
+          return res.status(400).send({ message: (err as Error).message });
+        }
+        return res.status(500).send({ message: "Unexpected error" });
+      }
     } else {
       game = new Game();
     }
@@ -29,9 +39,8 @@ export default async function handler(
         seed: game.seed.encoded_seed,
       });
     }
-    res.status(400).send(null);
+    return res.status(500).send({ message: "Unexpected error" });
   } else {
-    res.status(405).send(null);
+    return res.status(405).send({ message: "Method Not Allowed" });
   }
-
 }

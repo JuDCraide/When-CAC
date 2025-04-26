@@ -14,9 +14,13 @@ export default class Seed {
     constructor(encoded_seed: string | null = null, start_timestamp: number) {
         if (encoded_seed) {
             this.encoded_seed = encoded_seed;
-            const decoded = this.decode_seed()
-            this.start_timestamp = decoded.start_timestamp
-            this.latest_ep = decoded.latest_ep
+            try {
+                const decoded = this.decode_seed()
+                this.start_timestamp = decoded.start_timestamp
+                this.latest_ep = decoded.latest_ep
+            } catch (err) {
+                throw err
+            }
         }
         else {
             this.start_timestamp = start_timestamp;
@@ -35,12 +39,16 @@ export default class Seed {
     }
 
     decode_seed(): decodedSeed {
-        // TODO: validate JSON format 
-        const seed = JSON.parse(Buffer.from(this.encoded_seed, 'base64').toString('ascii'))
-        if(!this.isSeedValid(seed)){
+        // TODO: validate JSON format
+        try {
+            const seed = JSON.parse(Buffer.from(this.encoded_seed, 'base64').toString('ascii'))
+            if (!this.isSeedValid(seed)) {
+                throw Error()
+            }
+            return seed as decodedSeed
+        } catch (err) {
             throw Error("Invalid Seed")
         }
-        return seed as decodedSeed
     }
 
     encode_seed(): string {
@@ -53,10 +61,10 @@ export default class Seed {
     isSeedValid(value: object): value is Seed {
         const keys = Object.keys(value)
         const requiredKeys = Object.keys(Seed)
-    
+
         if (typeof value !== 'object' || value === null)
             return false;
-    
+
         return (
             requiredKeys.every(key => key in value)                              //  Ensure all required keys are present
             && (Object.keys(value) as (keyof Seed)[]).every(key => keys.includes(key))    //  Ensure no undefined keys are present
