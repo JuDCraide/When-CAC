@@ -1,5 +1,5 @@
-const LATEST_EP = 1723;
 import * as random from "random-seed";
+export const LATEST_EP = 1723;
 
 interface decodedSeed {
     start_timestamp: number;

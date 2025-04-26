@@ -3,16 +3,15 @@ import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import bg from "../../public/images/bg-dark.png";
 import thumb from "../../public/images/_1lRF7UL0mg.jpg"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 import { useRouter } from "next/router";
 
 import { SelectEpisode, SelectDate, SeedInput } from "../components/Inputs"
 import Header from "../components/Header"
 import SeedDialog from "@/components/SeedDialog";
-
-//TODO: make API call
-const LATEST_EP = 1723;
+import { stringDateToSlash } from "@/utils/stringDateToSlash";
+import { LATEST_EP } from "@/api/seed";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -24,8 +23,10 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
+
 export default function Home() {
-	const [answerReveal, setAnswerReveal] = useState(false);
+	const latestEp = LATEST_EP;
+	
 	const video = {
 		title: "ESTRAGARAM O CHURRASCO - Ep.1074",
 		formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
@@ -34,6 +35,7 @@ export default function Home() {
 		date: "2017-10-06"
 	}
 
+	const [answerReveal, setAnswerReveal] = useState(false);
 	const [ep, setEp] = useState(1);
 	const [date, setDate] = useState(dayjs());
 	const router = useRouter();
@@ -110,7 +112,7 @@ export default function Home() {
 								!answerReveal ? video.formatted_title : video.title
 							}</h3>
 							<p>Data de publicação: {
-								!answerReveal ? "??/??/????" : video.date.split("-").reverse().join("/")
+								!answerReveal ? "??/??/????" : stringDateToSlash(video.date)
 							}</p>
 							<a
 								className={answerReveal ? styles.secondary : styles.hide}

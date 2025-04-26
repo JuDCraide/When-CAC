@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { GameData } from "./api/game";
 import { GuessVideo, ResultResponse, VideoResponse } from "@/api/database";
 import { useSearchParams } from "next/navigation";
+import { stringDateToSlash } from "@/utils/stringDateToSlash";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -160,12 +161,6 @@ export default function Home() {
     }
     createGame()
   }, []) // "@ts-expect-error
-
-  function stringDateToSlash(date: string): string {
-    return date?.split("-").reverse().join("/")
-  }
-
-  console.log(result)
 
   return (
     <>
