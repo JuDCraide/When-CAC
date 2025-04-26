@@ -46,6 +46,7 @@ export interface Result {
   epTotal: number,
   dateTotal: number,
   totalPoints: number,
+  seed: string,
 }
 
 export default function Home() {
@@ -57,7 +58,7 @@ export default function Home() {
   const [round, setRound] = useState(1);
   const [guessVideo, setGuessVideo] = useState<null | GuessVideo>(null);
   const [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
-  const [result, setResult] = useState<Result>({ rounds: [], epTotal: 0, dateTotal: 0, totalPoints: 0 });
+  const [result, setResult] = useState<Result>({ rounds: [], epTotal: 0, dateTotal: 0, totalPoints: 0, seed: "" });
 
   const searchParams = useSearchParams()
   const seed = searchParams.get('seed')
@@ -107,7 +108,8 @@ export default function Home() {
       }],
       epTotal: result.epTotal + guessVideoRes.points.ep,
       dateTotal: result.dateTotal + guessVideoRes.points.date,
-      totalPoints: result.totalPoints + guessVideoRes.points.ep + guessVideoRes.points.date
+      totalPoints: result.totalPoints + guessVideoRes.points.ep + guessVideoRes.points.date,
+      seed: result.seed
     })
     setAnswered(true)
     console.log(guessVideo?.image_url)
@@ -121,7 +123,6 @@ export default function Home() {
       await getRound(nextRound)
       setAnswered(false)
     } else {
-      // TODO: Go to result page
       router.push({
         pathname:'/end',
         query: {
@@ -148,6 +149,10 @@ export default function Home() {
         if (res === null) {
           return //Error
         }
+        setResult({
+          ...result,
+          seed: res.seed,
+        })
         setUuid(res.uuid)
         setLatestEp(res.latestEp)
         await getRound(1, res.uuid)

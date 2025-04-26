@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+// TODO: Change how we send the result to the end page
 
-//TODO: show seed at the end
 export default function Home() {
   // let fakeResult: Result = {
   //   rounds: [
@@ -117,13 +117,13 @@ export default function Home() {
   //   dateTotal: 3,
   //   totalPoints: 154
   // }
- 
+
   const zeroResult: Result = {
-    rounds: [
-    ],
+    rounds: [],
     epTotal: 0,
     dateTotal: 0,
-    totalPoints: 0
+    totalPoints: 0,
+    seed: ""
   }
   const [result, setResult] = useState<Result>(zeroResult);
   const [round, setRound] = useState(0);
@@ -165,10 +165,10 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.mainResult}>
-            <p> Round details:</p>
+            <p>Detalhes do round:</p>
             <ClickableRoundDisplay round={round} setRound={setRound} />
           </div>
-          {round > 0 &&
+          {round > 0 ?
             <div className={`${styles.mainGame} ${round == 0 ? styles.hide : ""}`}>
               <div className={styles.video}>
                 <div className={styles.mainImage}>
@@ -220,7 +220,11 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>}
+            </div>
+            :
+            <div className={styles.mainGame} />
+          }
+          <p className={styles.seed}>Seed do jogo: {result.seed}</p>
         </main>
       </div>
     </>

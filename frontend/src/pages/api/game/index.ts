@@ -6,6 +6,7 @@ import { createGame } from "@/api/database";
 export type GameData = {
   uuid: string;
   latestEp: number;
+  seed: string;
 };
 
 
@@ -25,6 +26,7 @@ export default async function handler(
       return res.status(200).json({
         uuid: game._id.toString(),
         latestEp: game.seed.latest_ep,
+        seed: game.seed.encoded_seed,
       });
     }
     res.status(400).send(null);

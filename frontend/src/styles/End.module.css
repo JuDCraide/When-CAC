@@ -207,6 +207,10 @@ button.secondary {
   font-size: 1.5em;
 }
 
+.seed {
+  align-self: center;
+}
+
 @media (hover: hover) and (pointer: fine) {
 
   a.primary:hover,

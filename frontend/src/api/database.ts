@@ -89,8 +89,6 @@ async function getGuessVideo(uuid: string, round: number) {
 }
 
 async function getResponseVideo(uuid: string, round: number, epGuess: number, dateGuess: string) {
-    // TODO: calculate points, update db, return points to frontend
-    // https://stackoverflow.com/questions/24747189/update-and-return-document-in-mongodb
     let response = null;
     if (process.env.DB_CONN_STRING) {
         const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
