@@ -1,5 +1,6 @@
 import * as random from "random-seed";
-export const LATEST_EP = 1723;
+export const LATEST_EP = 1736;
+export const MISSING_EPS = [59, 87, 107, 225, 251, 298, 308, 309, 395, 449, 581, 593, 640, 715, 716, 767, 912, 916, 939, 983, 1070, 1151, 1198, 1202, 1215, 1234, 1265, 1323, 1351, 1372, 1374, 1375, 1378, 1380, 1386, 1387, 1389, 1397, 1418, 1439, 1599, 1600, 1601, 1602, 1603, 1604, 1605, 1606, 1629, 1682]
 
 interface decodedSeed {
     start_timestamp: number;
@@ -35,7 +36,13 @@ export default class Seed {
 
     get_episodes(): number[] {
         const rand = random.create(this.encoded_seed);
-        return Array.from({ length: 5 }, () => rand.intBetween(1, this.latest_ep));
+        const eps: number[] = []
+        while (eps.length < 5) {
+            const ep = rand.intBetween(1, this.latest_ep);
+            if (eps.includes(ep) || MISSING_EPS.includes(ep)) continue;
+            eps.push(ep);
+        }
+        return eps
     }
 
     decode_seed(): decodedSeed {
