@@ -105,7 +105,7 @@ export default function Home() {
                   <span>Você adivinhou: <h5>Ep. {result.rounds[round - 1]?.ep.guess}</h5></span>
                   <span>Diferença: <h5>{result.rounds[round - 1]?.ep.diff}</h5></span>
                 </div>
-                <div>
+                <div className={styles.finalSum}>
                   <div className={styles.resultPoints}>
                     <div className={styles.resultPoints}>
                       <h4>📅 {result.rounds[round - 1]?.date.points}</h4><h5>/100</h5>

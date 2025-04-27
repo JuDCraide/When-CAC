@@ -20,17 +20,20 @@
   justify-content: center;
 }
 
-.header>div{
+.header>div {
   flex: 1;
 }
 
 .header h1 {
   font-size: 2.25em;
   font-weight: normal;
-  padding-top: 3px;
+  
+
+  display: flex;
+  align-items: center;
 }
 
-.header .logo{
+.header .logo {
   justify-content: flex-start;
   display: flex;
 }
@@ -51,9 +54,19 @@
   padding: 0 1rem;
   background-color: var(--green);
   min-height: 3rem;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.3em;
+}
+
+
+@media (max-width: 1000px) {
+  .header h1 {
+    font-size: 1.8em;
+
+    display: flex;
+    align-items: center;
+  }
 }

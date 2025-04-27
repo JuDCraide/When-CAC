@@ -39,6 +39,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 0.75rem;
   /* padding-right: 2em; */
 }
 
@@ -58,6 +59,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5em;
 
   font-size: 1.25em;
   line-height: 20px;
@@ -217,6 +219,7 @@ button.secondary {
 }
 
 .main>.greenContainer h2 {
+  text-align: center;
   font-size: 2em;
   align-self: center;
 }
@@ -305,15 +308,69 @@ button.secondary {
   }
 }
 
+
+@media (max-width: 1100px) {
+  .mainExample h2 {
+    font-size: 2.5em;
+    padding-bottom: 1rem;
+    max-width: 500px;
+  }
+
+  .playItem h3 {
+    font-size: 1.75rem;
+  }
+
+  .mainExample .greenContainer {
+    flex-wrap: wrap;
+  }
+}
+
+
+@media (max-width: 750px) {
+  .mainExample {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .main>.greenContainer .instructions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 600px) {
   .page {
-    padding: 32px;
+    padding: 2rem;
     padding-top: 0;
-    padding-bottom: 80px;
+    padding-bottom: 2rem;
+  }
+
+  .main {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .mainExample {
     align-items: center;
+  }
+
+  .mainExample .greenContainer {
+    flex-wrap: wrap;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
+
+  .play {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .playItem>div {
+    height: 6rem;
   }
 
   .mainExample a,
@@ -331,5 +388,12 @@ button.secondary {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .page {
+    padding: 1rem;
+    padding-top: 0;
   }
 }
