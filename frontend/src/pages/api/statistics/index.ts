@@ -8,7 +8,9 @@ export default async function handler(
   res: NextApiResponse<APIError>,
 ) {
   if (req.method === 'GET') {
-    const ip = req.socket.remoteAddress;
+    //TODO - Cookies
+    const ip = req.headers['x-forwarded-for'] as string || req.socket?.remoteAddress || '127.0.0.1';
+    //console.log(ip)
     const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(ip));
     const hash = Array.from(new Uint8Array(buf))
       .map((b) => b.toString(16).padStart(2, "0"))
