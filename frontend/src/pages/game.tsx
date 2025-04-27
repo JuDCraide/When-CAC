@@ -124,8 +124,6 @@ export default function Home() {
       seed: result.seed
     })
     setAnswered(true)
-    console.log(guessVideo?.image_url)
-    console.log(result)
   }
 
   async function onNext() {

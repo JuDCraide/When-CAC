@@ -15,7 +15,7 @@ export default async function handler(
 	res: NextApiResponse<ResultResponse | APIError>,
 ) {
 	if (req.method === 'POST') {
-		console.log(typeof (req.query?.round))
+		// console.log(typeof (req.query?.round))
 		if (req.body != null && isVideoResponseReq(req.body)) {
 			const responseVideo = await getResponseVideo(req.body.uuid, req.body.round, req.body.ep, req.body.date);
 			if (responseVideo)

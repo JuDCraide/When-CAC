@@ -7,7 +7,7 @@ interface PointsDisplayProps {
 export default function PointsDisplay({ points }: PointsDisplayProps) {
 	return (
 		<div className={styles.pointsDisplay}>
-			<p>Points </p><h3>{points}</h3><p> /1000</p>
+			<p>Pontos </p><h3>{points}</h3><p> /1000</p>
 		</div>
 	)
 }

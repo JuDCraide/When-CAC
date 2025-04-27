@@ -134,7 +134,8 @@ export default function Home() {
     const query: string = router.query?.results as string
     const result = JSON.parse(query) as Result
     setResult(result)
-    console.log(result)
+    setRound(1)
+    // console.log(result)
   }, []) // "@ts-expect-error
 
   return (

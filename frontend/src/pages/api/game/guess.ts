@@ -7,7 +7,7 @@ export default async function handler(
 	res: NextApiResponse<GuessVideo | APIError>,
 ) {
 	if (req.method === 'GET') {
-		console.log(typeof (req.query?.round))
+		// console.log(typeof (req.query?.round))
 		if (typeof (req.query?.uuid) == 'string' && typeof (req.query?.round) == 'string') {
 			const round = Number(req.query?.round);
 			const guessVideo = await getGuessVideo(req.query.uuid, round);
