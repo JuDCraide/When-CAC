@@ -1,10 +1,37 @@
 import { ObjectId } from 'mongodb';
-import * as mongoDB from "mongodb";
 import Game from './game';
 import fs from 'fs';
 import path from 'path';
 import { calculatePointsDate, calculatePointsEps } from './points';
 import dayjs from 'dayjs';
+
+import { MongoClient, Db } from "mongodb";
+
+if (!process.env.DB_CONN_STRING) {
+    throw new Error('DB_CONN_STRING must be defined');
+}
+
+const uri = process.env.DB_CONN_STRING!;
+const options = {};
+
+let client: MongoClient;
+let clientPromise: Promise<MongoClient>;
+
+if (process.env.NODE_ENV === "development") {
+    if (!(global as any)._mongoClientPromise) {
+        client = new MongoClient(uri, options);
+        (global as any)._mongoClientPromise = client.connect();
+    }
+    clientPromise = (global as any)._mongoClientPromise;
+} else {
+    client = new MongoClient(uri, options);
+    clientPromise = client.connect();
+}
+
+async function getDb(): Promise<Db> {
+    const client = await clientPromise;
+    return client.db('WhenCAC');
+}
 
 export interface GuessVideo {
     formatted_title: string,
@@ -21,7 +48,7 @@ export interface VideoResponse {
 
 export interface ResultResponse {
     responseVideo: VideoResponse
-    points:{
+    points: {
         ep: number,
         date: number,
     }
@@ -41,130 +68,92 @@ export interface View {
 // }
 
 export async function createGame(game: Game) {
-    let createdId = null;
-    if (process.env.DB_CONN_STRING) {
-        const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
-        try {
-            await client.connect();
-            const db: mongoDB.Db = client.db("WhenCAC");
-            if (db) {
-                const gamesCollection = db.collection("games");
-                const result = await gamesCollection.insertOne(game);
-                createdId = result.insertedId;
-            }
-        } catch (err) {
-            console.error(err);
-        } finally {
-            await client.close();
-            return createdId;
-        }
-    }
-    return null;
+    const db = await getDb();
+    const result = await db.collection<Game>('games').insertOne(game);
+    return result.insertedId;
+}
+
+async function getGameById(id: string) {
+    const db = await getDb();
+    return db.collection<Game>('games').findOne({ _id: new ObjectId(id) });
+}
+
+async function updateGamePoints(id: string, epPoints: number[], datePoints: number[]) {
+    const db = await getDb();
+    await db.collection('games').updateOne(
+        { _id: new ObjectId(id) },
+        { $set: { ep_points: epPoints, date_points: datePoints } }
+    );
+}
+
+async function getGuessVideoByEp(ep: number) {
+    const db = await getDb();
+    const video = await db.collection<GuessVideo>('videos').findOne({ ep });
+    if (!video) return null;
+
+    return {
+        formatted_title: video.formatted_title,
+        video_id: video.video_id,
+        image_url: getImageAsBase64(`${video.video_id}.jpg`)
+    };
+}
+
+async function getVideoResponseByEp(ep: number) {
+    const db = await getDb();
+    return db.collection<VideoResponse>('videos').findOne({ ep });
 }
 
 async function getGuessVideo(uuid: string, round: number) {
-    let guessVideo = null;
-    if (process.env.DB_CONN_STRING) {
-        const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
-        try {
-            await client.connect();
-            const db: mongoDB.Db = client.db("WhenCAC");
-            if (db) {
-                const gamesCollection = db.collection("games");
-                const game = await gamesCollection.findOne<Game>({ _id: new ObjectId(uuid) });
-                if (game) {
-                    const videoCollection = db.collection("videos");
-                    const video = await videoCollection.findOne<GuessVideo>({ ep: game.episodes[round - 1] });
-                    if (video) {
-                        guessVideo = {
-                            formatted_title: video.formatted_title,
-                            video_id: video.video_id,
-                            image_url: getImageAsBase64(`${video.video_id}.jpg`)
-                        };
-                    }
-                }
-            }
-        } catch (err) {
-            console.error(err);
-        } finally {
-            await client.close();
-        }
+    const game = await getGameById(uuid);
+    if (!game) {
+        return null;
     }
-    return guessVideo;
+    return await getGuessVideoByEp(game.episodes[round - 1]);
 }
 
 async function getResponseVideo(uuid: string, round: number, epGuess: number, dateGuess: string) {
+    const game = await getGameById(uuid);
     let response = null;
-    if (process.env.DB_CONN_STRING) {
-        const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
-        try {
-            await client.connect();
-            const db: mongoDB.Db = client.db("WhenCAC");
-            if (db) {
-                const gamesCollection = db.collection("games");
-                const game = await gamesCollection.findOne<Game>({ _id: new ObjectId(uuid) });
-                if (game) {
-                    const videoCollection = db.collection("videos");
-                    const video = await videoCollection.findOne<VideoResponse>({ ep: game.episodes[round - 1] });
-                    if (video) {
-                        const pointsEp = calculatePointsEps(video.ep, epGuess)
-                        const pointsDate = calculatePointsDate(dayjs(video.date), dayjs(dateGuess))
-                        game.ep_points[round - 1] = pointsEp
-                        game.date_points[round - 1] = pointsDate
-                        await gamesCollection.updateOne({ _id: new ObjectId(uuid) }, {$set:{
-                            "ep_points": game.ep_points,
-                            "date_points": game.date_points
-                        }});
-                        response = {
-                            responseVideo: {
-                                title: video.title,
-                                ep: video.ep,
-                                video_id: video.video_id,
-                                date: video.date
-                            },
-                            points: {
-                                ep: pointsEp,
-                                date: pointsDate,
-                            }
-                        };
-                    }
+    if (game) {
+        const video = await getVideoResponseByEp(game.episodes[round - 1]);
+        if (video) {
+            const pointsEp = calculatePointsEps(video.ep, epGuess)
+            const pointsDate = calculatePointsDate(dayjs(video.date), dayjs(dateGuess))
+            game.ep_points[round - 1] = pointsEp
+            game.date_points[round - 1] = pointsDate
+            await updateGamePoints(uuid, game.ep_points, game.date_points);
+            response = {
+                responseVideo: {
+                    title: video.title,
+                    ep: video.ep,
+                    video_id: video.video_id,
+                    date: video.date
+                },
+                points: {
+                    ep: pointsEp,
+                    date: pointsDate,
                 }
-            }
-        } catch (err) {
-            console.error(err);
-        } finally {
-            await client.close();
+            };
+
         }
     }
+
     return response;
 }
 
 async function updateViews(view: View) {
-    const twentyFourHoursAgo = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
-    let isNewView = false;
-    if (process.env.DB_CONN_STRING) {
-        const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
-        try {
-            await client.connect();
-            const db: mongoDB.Db = client.db("WhenCAC");
-            if (db) {
-                const viewsCollection = db.collection("views");
-                const db_view = await viewsCollection.findOne({
-                    hash: view.hash,
-                    date: { $gte: twentyFourHoursAgo }
-                  });
-                if (!db_view){
-                    isNewView = true;
-                    await viewsCollection.insertOne(view);
-                }                
-            }
-        } catch (err) {
-            console.error(err);
-        } finally {
-            await client.close();
-        }
+    const db = await getDb();
+    const viewsCollection = db.collection<View>('views');
+
+    const twentyFourHoursAgo = dayjs().subtract(24, 'hours').toDate();
+    const recentView = await viewsCollection.findOne({ hash: view.hash, date: { $gte: twentyFourHoursAgo } });
+
+    if (!recentView) {
+        await viewsCollection.insertOne(view);
+        return true;
     }
-    return isNewView;
+
+    return false;
 }
 
 export function getImageAsBase64(relativePath: string): string {
