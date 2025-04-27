@@ -8,9 +8,10 @@ import { useRouter } from "next/router";
 interface HeaderProps {
 	round?: number | null,
 	points?: number | null,
+	home?: boolean,
 }
 
-export default function Header({ round = null, points = null }: HeaderProps) {
+export default function Header({ round = null, points = null, home = false }: HeaderProps) {
 	const router = useRouter();
 	return (
 		<header className={styles.header}
@@ -34,6 +35,11 @@ export default function Header({ round = null, points = null }: HeaderProps) {
 			<div>
 				{points !== null && <PointsDisplay points={points} />}
 			</div>
+			{home &&
+				<button className={`${styles.cleanButton} ${styles.green}`} onClick={() => router.push('/')}>
+					<p>Voltar</p><h2>🏠</h2>
+				</button>
+			}
 		</header>
 	)
 }

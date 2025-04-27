@@ -193,7 +193,7 @@ export default function Home() {
           backgroundImage: `url(${bg.src})`,
         }}
       >
-        <Header round={round} points={result.totalPoints} />
+        <Header round={round} points={result.totalPoints} home/>
         <main className={styles.main}>
           {loaded ?
             <div className={styles.mainGame}>

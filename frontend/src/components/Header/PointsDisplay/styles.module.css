@@ -7,6 +7,7 @@
   background-color: var(--green);
   height: calc(40px + 0.25rem);
   gap: 0.3em;
+  min-height: 3rem;
 }
 
 .numberDisplay h3 {

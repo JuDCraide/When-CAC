@@ -54,7 +54,7 @@ export default function Home() {
           backgroundImage: `url(${bg.src})`,
         }}
       >
-        <Header points={result.totalPoints} />
+        <Header points={result.totalPoints} home />
         <main className={styles.main}>
           <div className={styles.mainResult}>
             <div className={styles.greenAnswerContainer}>

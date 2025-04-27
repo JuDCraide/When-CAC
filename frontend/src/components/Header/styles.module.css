@@ -45,3 +45,15 @@
   cursor: pointer;
   outline: inherit;
 }
+
+.green {
+  border-radius: 2em;
+  padding: 0 1rem;
+  background-color: var(--green);
+  min-height: 3rem;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+}
