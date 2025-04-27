@@ -4,6 +4,8 @@ import bg from "../../../public/images/bg-dark.png";
 import RoundDisplay from "./RoundDisplay";
 import PointsDisplay from "./PointsDisplay";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import ReturnHomeDialog from "../ReturnHomeDialog";
 
 interface HeaderProps {
 	round?: number | null,
@@ -13,6 +15,13 @@ interface HeaderProps {
 
 export default function Header({ round = null, points = null, home = false }: HeaderProps) {
 	const router = useRouter();
+
+	const [openReturnHomeDialog, setOpenReturnHomeDialog] = useState(false);
+
+	function onClick() {
+		setOpenReturnHomeDialog(true);
+	}
+
 	return (
 		<header className={styles.header}
 			style={{
@@ -36,10 +45,11 @@ export default function Header({ round = null, points = null, home = false }: He
 				{points !== null && <PointsDisplay points={points} />}
 			</div>
 			{home &&
-				<button className={`${styles.cleanButton} ${styles.green}`} onClick={() => router.push('/')}>
+				<button className={`${styles.cleanButton} ${styles.green}`} onClick={onClick}>
 					<p>Voltar</p><h2>🏠</h2>
 				</button>
 			}
+			<ReturnHomeDialog openReturnHomeDialog={openReturnHomeDialog} onCloseDialog={() => setOpenReturnHomeDialog(false)} />
 		</header>
 	)
 }
