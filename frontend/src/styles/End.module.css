@@ -203,7 +203,8 @@ button.secondary {
   align-items: flex-end;
   gap: 0.3rem;
 }
-.mainResult p{
+
+.mainResult p {
   font-size: 1.5em;
 }
 

@@ -188,6 +188,13 @@ button.secondary {
   visibility: hidden;
 }
 
+.loader {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (hover: hover) and (pointer: fine) {
 
   a.primary:hover,

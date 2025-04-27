@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
-import styles from "@/styles/Game.module.css";
+import CircularProgress from '@mui/material/CircularProgress';
+import styles from "../styles/Game.module.css";
 import bg from "../../public/images/bg-dark.png";
 import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
@@ -11,8 +12,8 @@ import { useRouter } from "next/router";
 import { GameData } from "./api/game";
 import { GuessVideo, ResultResponse, VideoResponse } from "@/api/database";
 import { useSearchParams } from "next/navigation";
-import { stringDateToSlash } from "@/utils/stringDateToSlash";
-import ErrorDialog from "@/components/ErrorDialog";
+import { stringDateToSlash } from "../utils/stringDateToSlash";
+import ErrorDialog from "../components/ErrorDialog";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -66,6 +67,7 @@ export default function Home() {
   const [error, setError] = useState("");
 
   const searchParams = useSearchParams();
+  const [loaded, setLoaded] = useState(false);
   const router = useRouter();
 
   const handleError = (err: string) => {
@@ -125,11 +127,13 @@ export default function Home() {
   }
 
   async function onNext() {
+    setLoaded(false)
     if (round < 5) {
       const nextRound = round + 1;
       setRound(nextRound)
       await getRound(nextRound)
       setAnswered(false)
+      setLoaded(true)
     } else {
       router.push({
         pathname: '/end',
@@ -169,6 +173,7 @@ export default function Home() {
         setUuid(res.uuid)
         setLatestEp(res.latestEp)
         await getRound(1, res.uuid)
+        setLoaded(true)
       }
     }
     createGame()
@@ -190,81 +195,87 @@ export default function Home() {
       >
         <Header round={round} points={result.totalPoints} />
         <main className={styles.main}>
-          <div className={styles.mainGame}>
-            <div className={styles.video}>
-              <div className={styles.mainImage}>
-                <div style={{
-                  backgroundImage: `url(${guessVideo?.image_url})`,
-                }} />
+          {loaded ?
+            <div className={styles.mainGame}>
+              <div className={styles.video}>
+                <div className={styles.mainImage}>
+                  <div style={{
+                    backgroundImage: `url(${guessVideo?.image_url})`,
+                  }} />
+                </div>
+                <h3>{
+                  !answered ? guessVideo?.formatted_title : videoResponse?.title
+                }</h3>
+                <p>{
+                  `Data de publicação: ${!answered ? "??/??/????" : result.rounds[round - 1]?.date.res}`
+                }</p>
+                <a
+                  className={`${styles.secondary} ${answered ? "" : styles.hide}`}
+                  href={answered && videoResponse != null ? `https://www.youtube.com/watch?v=${videoResponse?.video_id}` : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
+                >
+                  {answered && "Assistir o vídeo"}
+                </a>
               </div>
-              <h3>{
-                !answered ? guessVideo?.formatted_title : videoResponse?.title
-              }</h3>
-              <p>{
-                `Data de publicação: ${!answered ? "??/??/????" : result.rounds[round - 1]?.date.res}`
-              }</p>
-              <a
-                className={`${styles.secondary} ${answered ? "" : styles.hide}`}
-                href={answered && videoResponse != null ? `https://www.youtube.com/watch?v=${videoResponse?.video_id}` : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
-              >
-                {answered && "Assistir o vídeo"}
-              </a>
-            </div>
-            <div className={`${styles.greenAnswerContainer} ${answered ? styles.result : ""}`}>
-              {!answered ?
-                <>
-                  <SelectDate setDate={setDate} />
-                  <SelectEpisode ep={ep} setEp={setEp} latestEp={latestEp} />
-                  <button
-                    onClick={async () => await onAnswer()}
-                    className={`${styles.cleanButton} ${styles.primary}`}
-                  >
-                    Adivinhar
-                  </button>
-                </>
-                :
-                <>
-                  {/* <h2>Resultado</h2> */}
-                  <div>
-                    <h3>📅 {result.rounds[round - 1]?.date.res}</h3>
-                    <p>Você adivinhou: <h5>{result.rounds[round - 1]?.date.guess}</h5></p>
-                    <p>Diferença: <h5>{result.rounds[round - 1]?.date.diff}</h5></p>
-                  </div>
-                  <div>
-                    <h3>💻 Ep. {result.rounds[round - 1]?.ep.res}</h3>
-                    <p>Você adivinhou: <h5>Ep. {result.rounds[round - 1]?.ep.guess}</h5></p>
-                    <p>Diferença: <h5>{result.rounds[round - 1]?.ep.diff}</h5></p>
-                  </div>
-                  <div>
-                    <div className={styles.resultPoints}>
+              <div className={`${styles.greenAnswerContainer} ${answered ? styles.result : ""}`}>
+                {!answered ?
+                  <>
+                    <SelectDate setDate={setDate} />
+                    <SelectEpisode ep={ep} setEp={setEp} latestEp={latestEp} />
+                    <button
+                      onClick={async () => await onAnswer()}
+                      className={`${styles.cleanButton} ${styles.primary}`}
+                    >
+                      Adivinhar
+                    </button>
+                  </>
+                  :
+                  <>
+                    {/* <h2>Resultado</h2> */}
+                    <div>
+                      <h3>📅 {result.rounds[round - 1]?.date.res}</h3>
+                      <p>Você adivinhou: <h5>{result.rounds[round - 1]?.date.guess}</h5></p>
+                      <p>Diferença: <h5>{result.rounds[round - 1]?.date.diff}</h5></p>
+                    </div>
+                    <div>
+                      <h3>💻 Ep. {result.rounds[round - 1]?.ep.res}</h3>
+                      <p>Você adivinhou: <h5>Ep. {result.rounds[round - 1]?.ep.guess}</h5></p>
+                      <p>Diferença: <h5>{result.rounds[round - 1]?.ep.diff}</h5></p>
+                    </div>
+                    <div>
                       <div className={styles.resultPoints}>
-                        <h4>📅 {result.rounds[round - 1]?.date.points}</h4><h5>/100</h5>
+                        <div className={styles.resultPoints}>
+                          <h4>📅 {result.rounds[round - 1]?.date.points}</h4><h5>/100</h5>
+                        </div>
+                        <h4>+</h4>
+                        <div className={styles.resultPoints}>
+                          <h4>💻 {result.rounds[round - 1]?.ep.points}</h4><h5>/100</h5>
+                        </div>
                       </div>
-                      <h4>+</h4>
                       <div className={styles.resultPoints}>
-                        <h4>💻 {result.rounds[round - 1]?.ep.points}</h4><h5>/100</h5>
+                        <h4>=</h4>
+                        <div className={styles.resultPoints}>
+                          <h4>🏆 {result.rounds[round - 1]?.roundTotal}</h4><h5>/200</h5>
+                        </div>
                       </div>
                     </div>
-                    <div className={styles.resultPoints}>
-                      <h4>=</h4>
-                      <div className={styles.resultPoints}>
-                        <h4>🏆 {result.rounds[round - 1]?.roundTotal}</h4><h5>/200</h5>
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={async () => await onNext()}
-                    className={`${styles.cleanButton} ${styles.primary}`}
-                  >
-                    Próximo Round
-                  </button>
-                </>
-              }
+                    <button
+                      onClick={async () => await onNext()}
+                      className={`${styles.cleanButton} ${styles.primary}`}
+                    >
+                      Próximo Round
+                    </button>
+                  </>
+                }
+              </div>
             </div>
-          </div>
+            :
+            <div className={styles.loader}>
+              <CircularProgress color="inherit" size={60}/>
+            </div>
+          }
         </main>
 
-        <ErrorDialog openErrorDialog={openErrorDialog} seed={result.seed} error={error} />
+        {result.seed && <ErrorDialog openErrorDialog={openErrorDialog} seed={result.seed} error={error} />}
       </div>
     </>
   );
