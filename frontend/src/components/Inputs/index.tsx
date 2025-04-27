@@ -2,7 +2,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction } from 'react';
 import dayjs from 'dayjs';
 
 const sx = {
@@ -133,11 +133,11 @@ const SelectDate: React.FC<SelectDateProps> = ({ setDate }) => {
 }
 
 interface SeedDialogProps {
-  seed: string,
-  setSeed: (value: SetStateAction<string>) => void,
+	seed: string,
+	setSeed: (value: SetStateAction<string>) => void,
 }
 
-const SeedInput: React.FC<SeedDialogProps> = ({seed, setSeed}) => {
+const SeedInput: React.FC<SeedDialogProps> = ({ seed, setSeed }) => {
 
 	return (
 		<ThemeProvider

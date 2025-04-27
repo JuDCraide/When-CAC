@@ -65,12 +65,10 @@ export default function Home() {
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const [error, setError] = useState("");
 
-
-  const searchParams = useSearchParams()
-  const seed = searchParams.get('seed')
+  const searchParams = useSearchParams();
   const router = useRouter();
 
-  function handleError(err: string) {
+  const handleError = (err: string) => {
     setError(err)
     setOpenErrorDialog(true)
   }
@@ -142,7 +140,7 @@ export default function Home() {
     }
   }
 
-  async function getRound(round: number, uuidString?: string) {
+  const getRound = async (round: number, uuidString?: string) => {
     uuidString = uuidString || uuid
     const guessVideoRes = await (await fetch(`/api/game/guess?uuid=${uuidString}&round=${round}`)).json() as GuessVideo | string
     if (typeof guessVideoRes === 'string') {
@@ -154,6 +152,7 @@ export default function Home() {
 
   useEffect(() => {
     async function createGame() {
+      const seed = searchParams.get('seed')
       if (guessVideo === null) {
         const path = `/api/game${seed ? `?seed=${seed}` : ""}`
         const rawRes = await fetch(path)
@@ -163,10 +162,10 @@ export default function Home() {
           return handleError(error.message)
         }
         const res = await rawRes.json() as GameData
-        setResult({
-          ...result,
+        setResult(r => ({
+          ...r,
           seed: res.seed,
-        })
+        }))
         setUuid(res.uuid)
         setLatestEp(res.latestEp)
         await getRound(1, res.uuid)
@@ -265,7 +264,7 @@ export default function Home() {
           </div>
         </main>
 
-        <ErrorDialog openErrorDialog={openErrorDialog} seed="{result.seed} "error={error} />
+        <ErrorDialog openErrorDialog={openErrorDialog} seed={result.seed} error={error} />
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 
 import styles from "./styles.module.css";
 
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import { useRouter } from "next/router";
 
 const geistSans = Geist({
@@ -38,7 +38,7 @@ const ErrorDialog: React.FC<ErrorDialogProps> = ({ openErrorDialog, seed, error 
       <IconButton
         aria-label="close"
         onClick={onCloseDialog}
-        sx={(theme) => ({
+        sx={() => ({
           position: 'absolute',
           right: 8,
           top: 8,

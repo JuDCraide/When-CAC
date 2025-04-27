@@ -6,9 +6,9 @@ import IconButton from "@mui/material/IconButton";
 
 import styles from "./styles.module.css";
 import { SeedInput } from "../Inputs";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +43,7 @@ const SeedDialog: React.FC<SeedDialogProps> = ({ openSeedDialog, onCloseDialog, 
       <IconButton
         aria-label="close"
         onClick={onCloseDialog}
-        sx={(theme) => ({
+        sx={() => ({
           position: 'absolute',
           right: 8,
           top: 8,

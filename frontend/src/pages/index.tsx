@@ -3,11 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import bg from "../../public/images/bg-dark.png";
 import thumb from "../../public/images/_1lRF7UL0mg.jpg"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import dayjs from 'dayjs';
 import { useRouter } from "next/router";
 
-import { SelectEpisode, SelectDate, SeedInput } from "../components/Inputs"
+import { SelectEpisode, SelectDate } from "../components/Inputs"
 import Header from "../components/Header"
 import SeedDialog from "@/components/SeedDialog";
 import { stringDateToSlash } from "@/utils/stringDateToSlash";
@@ -26,7 +26,7 @@ const geistMono = Geist_Mono({
 
 export default function Home() {
 	const latestEp = LATEST_EP;
-	
+
 	const video = {
 		title: "ESTRAGARAM O CHURRASCO - Ep.1074",
 		formatted_title: "ESTRAGARAM O CHURRASCO - Ep.???",
@@ -54,7 +54,7 @@ export default function Home() {
 		setOpenSeedDialog(false)
 	}
 
-	function onStartGame(seed: string){		
+	function onStartGame(seed: string) {
 		router.push(`/game?seed=${seed}`)
 	}
 
@@ -153,13 +153,13 @@ export default function Home() {
 							</div>
 							<div className={styles.step}>
 								<p>3 Digite ou selecione o seu palpite do número do episódio</p>
-								<SelectEpisode ep={ep} setEp={setEp} latestEp={LATEST_EP} />
+								<SelectEpisode ep={ep} setEp={setEp} latestEp={latestEp} />
 							</div>
 							<div className={styles.step}>
 								<p>4 Quando estiver pronto, pressione adivinhar</p>
 								<div>
 									<button
-										// onClick={() => setAnswerRevel(!answerReveal)}
+										onClick={() => console.log(date)}
 										className={`${styles.cleanbutton} ${styles.primary}`}
 									>
 										Adivinhar
@@ -172,7 +172,7 @@ export default function Home() {
 				<footer className={styles.footer}>
 					Feito com ♥ por Júlia e Leo
 				</footer>
-				
+
 				<SeedDialog openSeedDialog={openSeedDialog} onCloseDialog={onCloseDialog} onPlayGame={onStartGame} />
 			</div>
 		</>

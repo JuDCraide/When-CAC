@@ -39,14 +39,13 @@ export default class Seed {
     }
 
     decode_seed(): decodedSeed {
-        // TODO: validate JSON format
         try {
             const seed = JSON.parse(Buffer.from(this.encoded_seed, 'base64').toString('ascii'))
             if (!this.isSeedValid(seed)) {
                 throw Error()
             }
-            return seed as decodedSeed
-        } catch (err) {
+            return seed as decodedSeed;
+        } catch {
             throw Error("Invalid Seed")
         }
     }
