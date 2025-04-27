@@ -52,7 +52,7 @@ const ReturnHomeDialog: React.FC<ReturnHomeDialogProps> = ({ openReturnHomeDialo
         <p className={styles.whiteText}>a partida. Perdendo o progresso até então.</p>
       </DialogContent>
       <DialogActions className={styles.greenContainer}>
-         <button className={`${styles.cleanbutton} ${styles.primary}`} onClick={() => onReturnHome()}>
+         <button className={`${styles.cleanbutton} ${styles.primary}`} onClick={() => onCloseDialog()}>
           Continuar jogo
         </button>
         <button className={`${styles.cleanbutton} ${styles.primary}`} onClick={() => onReturnHome()}>
