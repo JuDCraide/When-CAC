@@ -1,1 +1,4 @@
 *.exe
+.env*
+/venv
+yt-dlp_linux
