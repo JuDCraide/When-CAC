@@ -184,6 +184,7 @@ button.secondary {
   align-items: center;
   justify-content: center;
   background-image: url(/images/background.png);
+  border-radius: 16px;
 }
 
 .playItem>div {
@@ -193,6 +194,7 @@ button.secondary {
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, .6);
+  background-color: rgba(0, 33, 29, .8);
   border-radius: 16px;
 }
 
@@ -201,7 +203,7 @@ button.secondary {
 }
 
 .playItem>div:hover {
-  background-color: rgba(0, 0, 0, .4);
+  background-color: rgba(0, 0, 0, .6);
 }
 
 .main>.greenContainer {
