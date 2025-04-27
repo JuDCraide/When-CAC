@@ -19,7 +19,11 @@ export default function Header({ round = null, points = null, home = false }: He
 	const [openReturnHomeDialog, setOpenReturnHomeDialog] = useState(false);
 
 	function onClick() {
-		setOpenReturnHomeDialog(true);
+		if (home) {
+			setOpenReturnHomeDialog(true);
+			return;
+		}
+		router.push("/");
 	}
 
 	return (
@@ -28,7 +32,7 @@ export default function Header({ round = null, points = null, home = false }: He
 				backgroundImage: `url(${bg.src})`,
 			}}
 		>
-			<button className={`${styles.cleanButton} ${styles.logo}`} onClick={() => router.push('/')}>
+			<button className={`${styles.cleanButton} ${styles.logo}`} onClick={onClick}>
 				<Image
 					src="/images/logo-no-bg.png"
 					alt="CAC logo"
