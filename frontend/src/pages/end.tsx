@@ -98,7 +98,7 @@ export default function Home() {
                 <div>
                   <h3>📅 {result.rounds[round - 1]?.date.res}</h3>
                   <span>Você adivinhou: <h5>{result.rounds[round - 1]?.date.guess}</h5></span>
-                  <span>Diferença: <h5>{result.rounds[round - 1]?.date.diff}</h5></span>
+                  <span>Diferença: <h5>{result.rounds[round - 1]?.date.diff}</h5> dias</span>
                 </div>
                 <div>
                   <h3>💻 Ep. {result.rounds[round - 1]?.ep.res}</h3>
