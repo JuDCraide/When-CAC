@@ -22,7 +22,7 @@
   flex: 1;
   /* width: 100%; */
   /* max-width: 1200px; */
-  width: 80%;
+  max-width: 80%;
   gap: 1rem;
   justify-content: center;
 }
@@ -43,7 +43,7 @@
   justify-content: center;
   align-items: start;
   gap: 0.25em;
-  max-width: 420px;
+  max-width: 32%;
 }
 
 .mainGame .video h3 {
