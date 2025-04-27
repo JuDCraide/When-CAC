@@ -27,6 +27,11 @@ export interface ResultResponse {
     }
 }
 
+export interface View {
+    hash: string,
+    date: Date
+}
+
 // interface Video {
 //     title: string,
 //     formatted_title: string,
@@ -134,10 +139,38 @@ async function getResponseVideo(uuid: string, round: number, epGuess: number, da
     return response;
 }
 
+async function updateViews(view: View) {
+    const twentyFourHoursAgo = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
+    let isNewView = false;
+    if (process.env.DB_CONN_STRING) {
+        const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
+        try {
+            await client.connect();
+            const db: mongoDB.Db = client.db("WhenCAC");
+            if (db) {
+                const viewsCollection = db.collection("views");
+                const db_view = await viewsCollection.findOne({
+                    hash: view.hash,
+                    date: { $gte: twentyFourHoursAgo }
+                  });
+                if (!db_view){
+                    isNewView = true;
+                    await viewsCollection.insertOne(view);
+                }                
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            await client.close();
+        }
+    }
+    return isNewView;
+}
+
 export function getImageAsBase64(relativePath: string): string {
     const filePath = path.join(process.cwd(), 'thumbnails/', relativePath);
     const fileData = fs.readFileSync(filePath);
     return `data:image/${path.extname(filePath).slice(1)};base64,${fileData.toString('base64')}`;
 }
 
-export { getGuessVideo, getResponseVideo };
+export { getGuessVideo, getResponseVideo, updateViews };
