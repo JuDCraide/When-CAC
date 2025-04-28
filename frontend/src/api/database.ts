@@ -78,12 +78,21 @@ async function getGameById(id: string) {
     return db.collection<Game>('games').findOne({ _id: new ObjectId(id) });
 }
 
+async function saveCompletedGame(id: string) {
+    const game = await getGameById(id);
+    if (game) {
+        const db = await getDb();
+        db.collection<Game>('completed_games').insertOne(game);
+    }
+}
+
 async function updateGamePoints(id: string, epPoints: number[], datePoints: number[]) {
     const db = await getDb();
     await db.collection('games').updateOne(
         { _id: new ObjectId(id) },
         { $set: { ep_points: epPoints, date_points: datePoints } }
     );
+    saveCompletedGame(id);
 }
 
 async function getGuessVideoByEp(ep: number) {
