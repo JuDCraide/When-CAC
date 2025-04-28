@@ -1,12 +1,11 @@
 import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/End.module.css";
-import bg from "../../public/images/bg-dark.png";
-import Header from "../components/Header"
-import { Result } from "./game";
-import { ClickableRoundDisplay } from "@/components/Header/RoundDisplay";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import bg from "../../../public/images/bg-dark.png";
+import Header from "../Header"
+import { ClickableRoundDisplay } from "../Header/RoundDisplay";
+import { useState } from "react";
+import { Result } from "@/pages/game";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,28 +16,30 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-// TODO: Change how we send the result to the end page
 
-export default function Home() {
+interface EndProps {
+  result: Result,
+}
 
-  const zeroResult: Result = {
-    rounds: [],
-    epTotal: 0,
-    dateTotal: 0,
-    totalPoints: 0,
-    seed: ""
-  }
-  const [result, setResult] = useState<Result>(zeroResult);
-  const [round, setRound] = useState(0);
-  const router = useRouter();
+export default function End({ result }: EndProps) {
 
+  // const zeroResult: Result = {
+  //   rounds: [],
+  //   epTotal: 0,
+  //   dateTotal: 0,
+  //   totalPoints: 0,
+  //   seed: ""
+  // }
+  // const [result, setResult] = useState<Result>(zeroResult);
+  const [round, setRound] = useState(1);
+  // const router = useRouter();
 
-  useEffect(() => {
-    const query: string = router.query?.results as string
-    const result = JSON.parse(query) as Result
-    setResult(result)
-    setRound(1)
-  }, []) // "@ts-expect-error
+  // useEffect(() => {
+  //   // const query: string = router.query?.results as string
+  //   // const result = JSON.parse(query) as Result
+  //   // setResult(result)
+  //   setRound(1)
+  // }, []) // "@ts-expect-error
 
   return (
     <>
