@@ -232,6 +232,16 @@ button.secondary {
   }
 }
 
+@media (max-width: 850px) {
+  .page header {
+    height: 130px;
+  }
+
+  .main {
+    padding-top: calc(1rem + 130px);
+  }
+}
+
 @media (max-width: 700px) {
   .main {
     width: 100%;
@@ -259,6 +269,17 @@ button.secondary {
   }
 }
 
+@media (max-width: 550px) {
+  .page header {
+    height: 180px;
+    column-gap: 0.8rem;
+  }
+
+  .main {
+    padding-top: calc(1rem + 180px);
+  }
+}
+
 @media (max-width: 380px) {
   .greenAnswerContainer.result .finalSum {
     display: flex;
@@ -272,5 +293,25 @@ button.secondary {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (max-width: 340px) {
+  .page header {
+    height: 180px;
+    column-gap: 0.8rem;
+    padding: 0.5rem
+  }
+}
+
+@media (max-width: 300px) {
+  .page header {
+    height: 230px;
+    column-gap: 2rem;
+    padding: 0.5rem
+  }
+
+  .main {
+    padding-top: calc(1rem + 230px);
   }
 }

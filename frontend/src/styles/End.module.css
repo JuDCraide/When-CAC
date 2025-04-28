@@ -314,6 +314,16 @@ button.secondary {
   }
 }
 
+@media (max-width: 520px) {
+  .page header {
+    height: 130px;
+  }
+
+  .main {
+    padding-top: calc(1rem + 130px);
+  }
+}
+
 @media (max-width: 380px) {
   .greenAnswerContainer.result .finalSum {
     display: flex;
@@ -327,5 +337,16 @@ button.secondary {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (max-width: 320px) {
+  .page header {
+    height: 180px;
+    column-gap: 0.8rem;
+  }
+
+  .main {
+    padding-top: calc(1rem + 180px);
   }
 }

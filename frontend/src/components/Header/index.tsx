@@ -36,18 +36,23 @@ export default function Header({ round = null, points = null, home = false }: He
 				<Image
 					src="/images/logo-no-bg.png"
 					alt="CAC logo"
-					height={56}
-					width={56}
+					height={52}
+					width={52}
 					priority
+					style={{ border: "1px solid #fff", borderRadius: "50%" }}
 				/>
 				<h1><b>When</b> CAC</h1>
 			</button>
-			<div>
-				{round !== null && <RoundDisplay round={round} />}
-			</div>
-			<div>
-				{points !== null && <PointsDisplay points={points} />}
-			</div>
+			{round !== null &&
+				<div className={styles.rounds}>
+					<RoundDisplay round={round} />
+				</div>
+			}
+			{points !== null &&
+				<div>
+					<PointsDisplay points={points} />
+				</div>
+			}
 			{home &&
 				<button className={`${styles.cleanButton} ${styles.green}`} onClick={onClick}>
 					<p>Voltar</p><h2>🏠</h2>
