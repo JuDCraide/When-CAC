@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import bg from "../../public/images/bg-dark.png";
 import thumb from "../../public/images/_1lRF7UL0mg.jpg"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 import { useRouter } from "next/router";
 
@@ -57,6 +57,10 @@ export default function Home() {
 	function onStartGame(seed: string) {
 		router.push(`/game?seed=${seed}`)
 	}
+
+	useEffect(() => {
+		fetch(`/api/statistics`)
+	}, [])
 
 	return (
 		<>
