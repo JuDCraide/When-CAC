@@ -16,13 +16,15 @@ const options = {};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
-
+const globalWithMongo = global as typeof globalThis & {
+    _mongoClientPromise: Promise<MongoClient>
+}
 if (process.env.NODE_ENV === "development") {
-    if (!(global as any)._mongoClientPromise) {
+    if (!globalWithMongo._mongoClientPromise) {
         client = new MongoClient(uri, options);
-        (global as any)._mongoClientPromise = client.connect();
+        globalWithMongo._mongoClientPromise = client.connect();
     }
-    clientPromise = (global as any)._mongoClientPromise;
+    clientPromise = globalWithMongo._mongoClientPromise;
 } else {
     client = new MongoClient(uri, options);
     clientPromise = client.connect();
@@ -86,13 +88,14 @@ async function saveCompletedGame(id: string) {
     }
 }
 
-async function updateGamePoints(id: string, epPoints: number[], datePoints: number[]) {
+async function updateGamePoints(id: string, epPoints: number[], datePoints: number[], round: number) {
     const db = await getDb();
     await db.collection('games').updateOne(
         { _id: new ObjectId(id) },
         { $set: { ep_points: epPoints, date_points: datePoints } }
     );
-    saveCompletedGame(id);
+    if (round == 5)
+        saveCompletedGame(id);
 }
 
 async function getGuessVideoByEp(ep: number) {
@@ -130,7 +133,7 @@ async function getResponseVideo(uuid: string, round: number, epGuess: number, da
             const pointsDate = calculatePointsDate(dayjs(video.date), dayjs(dateGuess))
             game.ep_points[round - 1] = pointsEp
             game.date_points[round - 1] = pointsDate
-            await updateGamePoints(uuid, game.ep_points, game.date_points);
+            await updateGamePoints(uuid, game.ep_points, game.date_points, round);
             response = {
                 responseVideo: {
                     title: video.title,

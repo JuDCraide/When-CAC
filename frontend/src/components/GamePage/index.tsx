@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 
 import { SelectEpisode, SelectDate } from "../Inputs"
 import Header from "../Header"
-import { useRouter } from "next/router";
 import { GuessVideo, ResultResponse, VideoResponse } from "../../api/database";
 import { stringDateToSlash } from "../../utils/stringDateToSlash";
 import { Result } from "@/pages/game";
@@ -41,7 +40,6 @@ export default function Game({ uuid, latestEp, result, setResult, handleError, s
   const [videoResponse, setVideoResponse] = useState<null | VideoResponse>(null);
 
   const [loaded, setLoaded] = useState(false);
-  const router = useRouter();
 
   async function onAnswer() {
     if (dayjs().diff(date, 'day') && ep === 1) {
