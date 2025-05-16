@@ -59,13 +59,13 @@ export default function End({ result }: EndProps) {
         <main className={styles.main}>
           <div className={styles.mainResult}>
             <div className={styles.greenAnswerContainer}>
-              <h2>📅 {result.epTotal}</h2><h4>/1000</h4>
+              <h2>📅 {result.epTotal}</h2><h4>/500</h4>
             </div>
             <div className={styles.greenAnswerContainer}>
-              <h2>💻 {result.dateTotal}</h2><h4>/1000</h4>
+              <h2>💻 {result.dateTotal}</h2><h4>/500</h4>
             </div>
             <div className={styles.greenAnswerContainer}>
-              <h2>🏆 {result.totalPoints}</h2><h4>/2000</h4>
+              <h2>🏆 {result.totalPoints}</h2><h4>/1000</h4>
             </div>
           </div>
           <div className={styles.mainResult}>
