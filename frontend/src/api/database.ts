@@ -106,7 +106,7 @@ async function getGuessVideoByEp(ep: number) {
     return {
         formatted_title: video.formatted_title,
         video_id: video.video_id,
-        image_url: getImageAsBase64(`${video.video_id}.webp`)
+        image_url: getImageAsBase64(`${video.video_id}.jpg`)
     };
 }
 

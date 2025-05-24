@@ -12,9 +12,9 @@ def get_files_from_folder(folder_path):
     return all_files
 
 def convert_image(image_path):
-    dest_image_path = image_path.replace('./thumbnails','../frontend/thumbnails' ).replace('.jpg','.webp')    
+    dest_image_path = image_path.replace('./thumbnails','../frontend/thumbnails' )
     jpg_img = cv2.imread(image_path)
-    cv2.imwrite(dest_image_path, jpg_img, [int(cv2.IMWRITE_WEBP_QUALITY), 80])
+    cv2.imwrite(dest_image_path, jpg_img, [int(cv2.IMWRITE_JPEG_QUALITY), 60])
 
 def safe_convert(f):
     try:
