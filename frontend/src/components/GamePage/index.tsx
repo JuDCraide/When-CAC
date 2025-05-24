@@ -90,6 +90,7 @@ export default function Game({ uuid, latestEp, result, setResult, handleError, s
       seed: result.seed
     })
     setAnswered(true)
+    setEp(1)
   }
 
   async function onNext() {
