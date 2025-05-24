@@ -59,7 +59,7 @@ export default function Home() {
 	}
 
 	useEffect(() => {
-		fetch(`/api/statistics`)
+		fetch(`/api/statistics?origin=web`)
 	}, [])
 
 	return (

@@ -58,7 +58,8 @@ export interface ResultResponse {
 
 export interface View {
     hash: string,
-    date: Date
+    date: Date,
+    origin: string
 }
 
 // interface Video {
@@ -158,7 +159,7 @@ async function updateViews(view: View) {
     const viewsCollection = db.collection<View>('views');
 
     const twentyFourHoursAgo = dayjs().subtract(24, 'hours').toDate();
-    const recentView = await viewsCollection.findOne({ hash: view.hash, date: { $gte: twentyFourHoursAgo } });
+    const recentView = await viewsCollection.findOne({ hash: view.hash, date: { $gte: twentyFourHoursAgo }, origin: view.origin });
 
     if (!recentView) {
         await viewsCollection.insertOne(view);
