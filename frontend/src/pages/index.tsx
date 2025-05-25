@@ -144,23 +144,24 @@ export default function Home() {
 						<h2>Como jogar?</h2>
 						<div className={styles.instructions}>
 							<div className={styles.step}>
-								<p>1 Analise a thumbnail e título do vídeo</p>
+								<p>1. Analise a thumbnail e título do vídeo</p>
 								<div className={styles.mainImage}>
 									<div style={{
 										backgroundImage: `url(${thumb.src})`,
 									}} />
 								</div>
+								<h3>ESTRAGARAM O CHURRASCO - Ep.???</h3>
 							</div>
 							<div className={styles.step}>
-								<p>2 Digite ou selecione no calendário o seu palpite da data de publicação</p>
-								<SelectDate setDate={setDate} />
-							</div>
-							<div className={styles.step}>
-								<p>3 Digite ou selecione o seu palpite do número do episódio</p>
+								<p>2. Digite ou selecione o seu palpite do número do episódio</p>
 								<SelectEpisode ep={ep} setEp={setEp} latestEp={latestEp} />
 							</div>
 							<div className={styles.step}>
-								<p>4 Quando estiver pronto, pressione adivinhar</p>
+								<p>3. Digite ou selecione no calendário o seu palpite da data de publicação</p>
+								<SelectDate setDate={setDate} />
+							</div>
+							<div className={styles.step}>
+								<p>4. Quando estiver pronto, pressione adivinhar</p>
 								<div>
 									<button
 										onClick={() => console.log(date)}
