@@ -6,7 +6,11 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<GuessVideo | APIError>,
 ) {
-	if (req.method === 'GET') {
+	if (req.method === 'OPTIONS') {
+		res.status(200).end();
+		return;
+	}
+	else if (req.method === 'GET') {
 		// console.log(typeof (req.query?.round))
 		if (typeof (req.query?.uuid) == 'string' && typeof (req.query?.round) == 'string') {
 			const round = Number(req.query?.round);

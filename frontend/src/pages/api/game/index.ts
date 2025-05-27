@@ -17,7 +17,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GameData | APIError>,
 ) {
-  if (req.method === 'GET') {
+  if (req.method === 'OPTIONS') {
+		res.status(200).end();
+		return;
+	}
+  else if (req.method === 'GET') {
     let game;
     if (typeof (req.query?.seed) == 'string') {
       try {

@@ -7,7 +7,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<APIError>,
 ) {
-  if (req.method === 'GET') {
+  if (req.method === 'OPTIONS') {
+		res.status(200).end();
+		return;
+	}
+  else if (req.method === 'GET') {
     //TODO - Cookies
     const allowedOrigins = ['web', 'unity-web', 'unity-windows', 'unity-android'];
     const ip = req.headers['x-forwarded-for'] as string || req.socket?.remoteAddress || '127.0.0.1';
