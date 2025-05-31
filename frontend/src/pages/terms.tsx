@@ -41,7 +41,7 @@ export default function Policy() {
         <ol>
           <li>
             <p><span>
-              {"Os materiais no site da When CAC são fornecidos \'como estão\'. When CAC não oferece garantias, expressas ou implícitas, e, por este meio, isenta e nega todas as outras garantias, incluindo, sem limitação, garantias implícitas ou              condições de comercialização, adequação a um fim específico ou não violação de propriedade intelectual ou outra violação de direitos."}
+              {"Os materiais no site da When CAC são fornecidos \'como estão\'. When CAC não oferece garantias, expressas ou implícitas, e, por este meio, isenta e nega todas as outras garantias, incluindo, sem limitação, garantias implícitas ou condições de comercialização, adequação a um fim específico ou não violação de propriedade intelectual ou outra violação de direitos."}
             </span></p>
           </li>
           <li>
@@ -56,7 +56,7 @@ export default function Policy() {
           <span>
             Em nenhum caso o When CAC ou seus fornecedores serão responsáveis ​​por quaisquer danos (incluindo, sem limitação, danos por perda de dados ou lucro ou devido a interrupção dos negócios) decorrentes do uso ou da incapacidade de usar
             os materiais em When CAC, mesmo que When CAC ou um representante autorizado da When CAC tenha sido notificado oralmente ou por escrito da possibilidade de tais danos. Como algumas jurisdições não permitem limitações em garantias
-            implícitas, ou limitações de responsabilidade por danos conseqüentes ou incidentais, essas limitações podem não se aplicar a você.
+            implícitas, ou limitações de responsabilidade por danos consequentes ou incidentais, essas limitações podem não se aplicar a você.
           </span>
         </p>
         <h2><span>5. Precisão dos materiais</span></h2>
