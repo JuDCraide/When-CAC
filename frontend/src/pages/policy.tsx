@@ -47,17 +47,19 @@ export default function Policy() {
         <h3><span>Compromisso do Usuário</span></h3>
         <p><span>O usuário se compromete a fazer uso adequado dos conteúdos e da informação que o When CAC oferece no site e com caráter enunciativo, mas não limitativo:</span></p>
         <ul>
-          <li><span>A) Não se envolver em atividades que sejam ilegais ou contrárias à boa fé a à ordem pública;</span></li>
           <li>
-            <span>
-              B) Não difundir propaganda ou conteúdo de natureza racista, xenofóbica, jogos de sorte ou azar, qualquer tipo de pornografia ilegal, de apologia ao terrorismo ou contra os direitos humanos;
-            </span>
+            <p><span>A) Não se envolver em atividades que sejam ilegais ou contrárias à boa fé a à ordem pública;</span></p>
           </li>
           <li>
-            <span>
+            <p><span>
+              B) Não difundir propaganda ou conteúdo de natureza racista, xenofóbica, jogos de sorte ou azar, qualquer tipo de pornografia ilegal, de apologia ao terrorismo ou contra os direitos humanos;
+            </span></p>
+          </li>
+          <li>
+            <p><span>
               C) Não causar danos aos sistemas físicos (hardwares) e lógicos (softwares) do When CAC, de seus fornecedores ou terceiros, para introduzir ou disseminar vírus informáticos ou quaisquer outros sistemas de hardware ou software que
               sejam capazes de causar danos anteriormente mencionados.
-            </span>
+            </span></p>
           </li>
         </ul>
         <h3><span>Aviso de Isenção de Responsabilidade</span></h3>

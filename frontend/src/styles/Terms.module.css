@@ -12,7 +12,7 @@
 }
 
 .main {
-  padding:  3rem 2rem;
+  padding: 3rem 2rem;
 
   display: flex;
   flex-direction: column;
@@ -22,20 +22,25 @@
   gap: 0.5rem;
 }
 
-.page p{
+.page p {
   text-align: justify;
   text-indent: 2em;
 }
 
 .page ul {
   list-style-type: none;
-  padding-left:  2em;
+  padding-left: 2em;
 }
 
 .page ol {
   padding-left: 2em;
 }
 
-.page p.noIdent{  
+.page ul p,
+.page ol p {
+  text-indent: 0;
+}
+
+.page p.noIdent {
   text-indent: 0;
 }
