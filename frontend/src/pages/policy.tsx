@@ -77,7 +77,7 @@ export default function Policy() {
         <ul>
           <li><span>Por e-mail: whencac@hotmail.com</span></li>
         </ul>
-        <p className={styles.noIdent}><span>Esta política é efetiva a partir de&nbsp;30 May 2025 23:53</span></p>
+        <p className={styles.noIdent}><span>Esta política é efetiva a partir de 30 de maio de 2025</span></p>
       </main>
     </div>
   );
