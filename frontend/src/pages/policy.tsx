@@ -64,7 +64,7 @@ export default function Policy() {
         </ul>
         <h3><span>Aviso de Isenção de Responsabilidade</span></h3>
         <p><span>Este site é um projeto independente e não possui qualquer afiliação oficial com o canal <a href="https://www.youtube.com/@cadeachave">Cadê a chave?</a>, tampouco reivindica propriedade ou responsabilidade sobre seu conteúdo. Todo o material exibido foi utilizado exclusivamente para fins de entretenimento.</span></p>
-        <p><span>Nenhum direito autoral é reivindicado sobre os conteúdos do canal, que pertencem aos seus respectivos criadores. Caso você seja o(a) detentor(a) dos direitos e deseje solicitar a remoção de qualquer conteúdo, entre em contato pelo e-mail: whencac@hotmail.com. Atenderemos prontamente a solicitação.</span></p>
+        <p><span>Nenhum direito autoral é reivindicado sobre os conteúdos do canal, que pertencem aos seus respectivos criadores. Caso você seja o(a) detentor(a) dos direitos e deseje solicitar a remoção de qualquer conteúdo, entre em contato pelo e-mail: whencac@gmail.com. Atenderemos prontamente a solicitação.</span></p>
         <h3><span>Mais informações</span></h3>
         <p>
           <span>
@@ -75,7 +75,7 @@ export default function Policy() {
         <h3><span>Fale Conosco</span></h3>
         <p><span>Se você tiver qualquer dúvida sobre esta Política de Privacidade, entre em contato conosco:</span></p>
         <ul>
-          <li><span>Por e-mail: whencac@hotmail.com</span></li>
+          <li><span>Por e-mail: whencac@gmail.com</span></li>
         </ul>
         <p className={styles.noIdent}><span>Esta política é efetiva a partir de 30 de maio de 2025</span></p>
       </main>
