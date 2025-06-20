@@ -12,6 +12,7 @@ import Header from "../components/Header"
 import SeedDialog from "@/components/SeedDialog";
 import { stringDateToSlash } from "@/utils/stringDateToSlash";
 import { LATEST_EP } from "@/api/seed";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -173,9 +174,44 @@ export default function Home() {
 							</div>
 						</div>
 					</div>
+					<div className={styles.faq}>
+						<h2>Perguntas frequentes</h2>
+						{/* <Accordion>
+							<AccordionSummary>Como funcionam os pontos?</AccordionSummary>
+							<AccordionDetails>
+								Pontuação
+								<ul>
+									<li>5 rounds com no máximo de 1000 pontos</li>
+									<li>Cada round com no máximo de 200 pontos</li>
+								</ul>
+								Pontuação data
+								
+								Pontuação episódio
+								
+							</AccordionDetails>
+						</Accordion> */}
+						<Accordion>
+							<AccordionSummary>Como jogar em outras plataformas?</AccordionSummary>
+							<AccordionDetails>
+								<ul>
+									<li>Site Web - Jogue em <a href="https://when-cac.vercel.app/">https://when-cac.vercel.app/</a></li>
+									<li>Unity Android APKPure - Baixe o apk em APKPure <a href="https://apkpure.com/p/com.JuliaDCraide.WhenCAC">https://apkpure.com/p/com.JuliaDCraide.WhenCAC</a></li>
+									<li>Unity Android itch.io - Baixe o apk pelo itch.io em <a href="https://judcraide.itch.io/when-cac">https://judcraide.itch.io/when-cac</a></li>
+									<li>Unity Web - Jogue em <a href="https://judcraide.itch.io/when-cac">https://judcraide.itch.io/when-cac</a></li>
+									<li>Unity Windows - Baixe o installer em <a href="https://judcraide.itch.io/when-cac">https://judcraide.itch.io/when-cac</a> ou baixe o zip com executável no mesmo link</li>
+								</ul>
+							</AccordionDetails>
+						</Accordion>
+					</div>
 				</main>
 				<footer className={styles.footer}>
-					Feito com ♥ por Júlia e Leo
+					<p>
+						Feito com ♥ por Júlia e Leo
+					</p>
+					<div>
+						<a href="/policy">Política Privacidade</a>
+						<a href="/terms">Termos de Uso</a>
+					</div>
 				</footer>
 
 				<SeedDialog openSeedDialog={openSeedDialog} onCloseDialog={onCloseDialog} onPlayGame={onStartGame} />

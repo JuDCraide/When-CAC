@@ -226,13 +226,9 @@ button.secondary {
 
 .main>.greenContainer .instructions {
   display: grid;
-  gap: 1.5rem;
+  gap: 1em 1.5rem;
   grid-template-columns: 1fr 1fr;
   padding-top: 1em;
-}
-
-.main>.greenContainer .instructions p {
-  padding-bottom: .5em;
 }
 
 .main>.greenContainer div div {
@@ -257,9 +253,9 @@ button.secondary {
   width: 100%;
 }
 
-.main>.greenContainer .instructions .step>fieldset{
+.main>.greenContainer .instructions .step>fieldset {
   padding-top: 1em;
-  flex:1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -267,11 +263,11 @@ button.secondary {
 }
 
 .main>.greenContainer .instructions .step>fieldset>div {
- flex:0;
+  flex: 0;
 }
 
 .main>.greenContainer .instructions .step>div {
-  flex:1;
+  flex: 1;
   display: flex;
   align-items: center;
   margin-top: 1em;
@@ -279,15 +275,54 @@ button.secondary {
 
 .main>.greenContainer .instructions .step .mainImage {
   /* margin-left: 1em; */
-  padding-bottom: 0;
+  padding-top: .5em;
+  padding-bottom: .5em;
   margin-top: 0;
   width: calc(100% - 1em);
 }
 
-.footer {
-  /* grid-row-start: 3; */
+
+.main>.greenContainer .instructions h3 {
+  font-weight: 500;
+}
+
+.faq {
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 2rem;
+  max-width: 1080px;
+  align-self: center;
+}
+
+.faq > div{
+  background: var(--green);
+  color: #fefefe;  
+  padding: 0 0.5em;
+}
+
+.main > .faq h2 {
+  text-align: center;
+  font-size: 2em;
+  align-self: center;
+  padding-bottom: .5em;
+}
+
+.main > .faq h3 span {
+  font-size: 1.5em;
+  line-height: 1.5em;
+}
+
+.main > .faq ul {
+  padding-left: 2rem;
+  padding-right: 1.5em;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 1rem;
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -295,10 +330,16 @@ button.secondary {
   width: 100%;
 }
 
+
+.footer>div {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
 .footer a {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
 .footer img {
@@ -323,6 +364,7 @@ button.secondary {
     border-color: transparent;
   }
 
+  .faq a:hover,
   .footer a:hover {
     text-decoration: underline;
     text-underline-offset: 4px;
