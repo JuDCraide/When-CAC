@@ -296,27 +296,36 @@ button.secondary {
   align-self: center;
 }
 
-.faq > div{
+.faq>div {
   background: var(--green);
-  color: #fefefe;  
+  color: #fefefe;
   padding: 0 0.5em;
 }
 
-.main > .faq h2 {
+.main>.faq h2 {
   text-align: center;
   font-size: 2em;
   align-self: center;
   padding-bottom: .5em;
 }
 
-.main > .faq h3 span {
+.main>.faq h3 span {
   font-size: 1.5em;
   line-height: 1.5em;
 }
 
-.main > .faq ul {
+.main>.faq ul {
   padding-left: 2rem;
   padding-right: 1.5em;
+}
+
+.main>.faq .faqDetails {
+  padding-bottom: 2em;
+}
+
+.main>.faq .faqDetails p {
+  text-align: justify;
+  text-indent: 2em;
 }
 
 .footer {

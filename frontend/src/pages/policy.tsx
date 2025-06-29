@@ -1,5 +1,6 @@
 import styles from "@/styles/Terms.module.css";
 import bg from "../../public/images/bg-dark.png";
+import Header from "@/components/Header";
 
 export default function Policy() {
   return (
@@ -9,6 +10,9 @@ export default function Policy() {
         backgroundImage: `linear-gradient(var(--darker-green), rgba(0, 0, 0, 0.5) ),url(${bg.src})`,
       }}
     >
+      <Header home={true} checkHome={false} style={{
+        background: `var(--darker-green)`,
+      }}/>
       <main className={styles.main}>
         <h2><span>Política Privacidade</span></h2>
         <p>

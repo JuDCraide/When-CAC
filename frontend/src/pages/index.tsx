@@ -13,6 +13,8 @@ import SeedDialog from "@/components/SeedDialog";
 import { stringDateToSlash } from "@/utils/stringDateToSlash";
 import { LATEST_EP } from "@/api/seed";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Link from "next/link";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -119,12 +121,12 @@ export default function Home() {
 							<p>Data de publicação: {
 								!answerReveal ? "??/??/????" : stringDateToSlash(video.date)
 							}</p>
-							<a
+							<Link
 								className={answerReveal ? styles.secondary : styles.hide}
 								href={answerReveal ? `https://www.youtube.com/watch?v=${video.video_id}` : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
 							>
 								{answerReveal && "Assistir o vídeo"}
-							</a>
+							</Link>
 						</div>
 					</div>
 					<div className={styles.play}>
@@ -176,29 +178,101 @@ export default function Home() {
 					</div>
 					<div className={styles.faq}>
 						<h2>Perguntas frequentes</h2>
-						{/* <Accordion>
-							<AccordionSummary>Como funcionam os pontos?</AccordionSummary>
-							<AccordionDetails>
-								Pontuação
-								<ul>
-									<li>5 rounds com no máximo de 1000 pontos</li>
-									<li>Cada round com no máximo de 200 pontos</li>
-								</ul>
-								Pontuação data
-								
-								Pontuação episódio
-								
-							</AccordionDetails>
-						</Accordion> */}
 						<Accordion>
-							<AccordionSummary>Como jogar em outras plataformas?</AccordionSummary>
-							<AccordionDetails>
+							<AccordionSummary
+								expandIcon={<ExpandMoreIcon style={{ color: "var(--white);" }} />}
+								aria-controls="panel1-content"
+								id="panel1-header"
+							>Como funcionam os pontos?</AccordionSummary>
+							<AccordionDetails className={styles.faqDetails}>
+								<h3>🎯 Sistema de Pontuação</h3>
+								Jogo possui 5 rounds com pontuação total de no máximo de 1000 pontos.
+								Cada round pode render até <strong>200 pontos</strong>:
 								<ul>
-									<li>Site Web - Jogue em <a href="https://when-cac.vercel.app/">https://when-cac.vercel.app/</a></li>
-									<li>Unity Android APKPure - Baixe o apk em APKPure <a href="https://apkpure.com/p/com.JuliaDCraide.WhenCAC">https://apkpure.com/p/com.JuliaDCraide.WhenCAC</a></li>
-									<li>Unity Android itch.io - Baixe o apk pelo itch.io em <a href="https://judcraide.itch.io/when-cac">https://judcraide.itch.io/when-cac</a></li>
-									<li>Unity Web - Jogue em <a href="https://judcraide.itch.io/when-cac">https://judcraide.itch.io/when-cac</a></li>
-									<li>Unity Windows - Baixe o installer em <a href="https://judcraide.itch.io/when-cac">https://judcraide.itch.io/when-cac</a> ou baixe o zip com executável no mesmo link</li>
+									<li>100 pontos pelo Episódio</li>
+									<li>100 pontos pela Data</li>
+								</ul>
+								<div>A pontuação final é a soma das duas.</div>
+
+								<br />
+								<h3>📺 Pontuação por Episódio</h3>
+								A pontuação depende da diferença entre o episódio real e o que você chutou:
+								<ul>
+									<li>Acerto exato → 100 pontos</li>
+									<li>Erro de até 10 episódios → de 99 a 96 pontos (queda gradual)</li>
+									<li>Erro de 11 a 25 episódios → de 95 a 85 pontos</li>
+									<li>Erro de 26 a 50 episódios → de 85 a 70 pontos</li>
+									<li>Erro de 51 a 100 episódios → de 70 a 50 pontos</li>
+									<li>Erro de 101 a 200 episódios → de 50 a 25 pontos</li>
+									<li>Erro de 201 a 300 episódios → de 25 a 10 pontos</li>
+									<li>Erro acima de 300 episódios → até 0 pontos</li>
+								</ul>
+								
+								<br />
+								<h3>📅 Pontuação por Data</h3>
+								Baseado na diferença de dias entre a data real e o palpite:
+								<ul>
+									<li>Erro de até 1 dia → 100 pontos</li>
+									<li>Erro de até 3 dias → 99 pontos</li>
+									<li>Erro de até 7 dias → 98 pontos</li>
+									<li>Erro de 8 a 15 dias → 96 a 97 pontos (queda gradual)</li>
+									<li>Erro de 16 a 31 dias → 85 a 95 pontos</li>
+									<li>Erro de 32 a 91 dias → 70 a 85 pontos</li>
+									<li>Erro de 92 a 183 dias → 55 a 70 pontos</li>
+									<li>Erro de 184 a 365 dias → 35 a 55 pontos</li>
+									<li>Erro de até 3 anos → 15 a 35 pontos</li>
+									<li>Erro acima de 3 anos (até 5 anos) → 0 a 15 pontos</li>
+									<li>Erro acima de 5 anos → 0 pontos</li>
+								</ul>
+							</AccordionDetails>
+						</Accordion>
+						<Accordion>
+							<AccordionSummary
+								expandIcon={<ExpandMoreIcon style={{ color: "var(--white);" }} />}
+								aria-controls="panel2-content"
+								id="panel2-header"
+							>Como jogar em outras plataformas?</AccordionSummary>
+							<AccordionDetails className={styles.faqDetails}>
+								<p>
+									Este jogo foi desenvolvido como <strong>Projeto Multidisciplinar para Jogos</strong>, para conclusão do curso de <strong>Jogos Digitais</strong> da <strong>UNINTER</strong>.
+									O objetivo do projeto foi colocar em prática as competências desenvolvidas ao longo do curso, resultando em uma demonstração funcional que integra design de jogos, programação, arte, sonorização, otimização, publicação e polimento.
+								</p><p>
+									A produção combinou o uso de Next.js com TypeScript, que funciona como backend e versão web funcional do jogo, além do motor Unity para as versões em Android, Web e Windows.
+									Ele pode ser jogado pelos seguintes links:
+								</p>
+								<ul>
+									<li>Site Web - Jogue em <Link href="https://when-cac.vercel.app/">https://when-cac.vercel.app/</Link></li>
+									<li>Unity Android APKPure - Baixe o apk em APKPure <Link href="https://apkpure.com/p/com.JuliaDCraide.WhenCAC">https://apkpure.com/p/com.JuliaDCraide.WhenCAC</Link></li>
+									<li>Unity Android itch.io - Baixe o apk pelo itch.io em <Link href="https://judcraide.itch.io/when-cac">https://judcraide.itch.io/when-cac</Link></li>
+									<li>Unity Web - Jogue em <Link href="https://judcraide.itch.io/when-cac">https://judcraide.itch.io/when-cac</Link></li>
+									<li>Unity Windows - Baixe o installer em <Link href="https://judcraide.itch.io/when-cac">https://judcraide.itch.io/when-cac</Link> ou baixe o zip com executável no mesmo link</li>
+								</ul>
+							</AccordionDetails>
+
+						</Accordion>
+						<Accordion>
+							<AccordionSummary
+								expandIcon={<ExpandMoreIcon style={{ color: "var(--white);" }} />}
+								aria-controls="panel2-content"
+								id="panel2-header"
+							>Quem são os desenvolvedores?</AccordionSummary>
+							<AccordionDetails className={styles.faqDetails}>
+								<p>
+									Este jogo foi desenvolvido por Júlia D. Craide e Leonardo R. Gobatto, casal de desenvolvedores que se conheceram no curso de 
+									Engenharia de Computação da UFRGS. Ambos compartilham o interesse por jogos e pelos canais do YouTube Cadê a Chave e Coisa de Nerd.
+									Atualmente, Júlia atua como Engenheira de Software e Leonardo está realizando seu doutorado na UFRGS. Entre em contato conosco:
+								</p>
+								<ul>
+									<li><Link href="https://www.linkedin.com/in/juliadcraide/">Júlia D. Craide</Link></li>
+									<li><Link href="https://www.linkedin.com/in/leonardorgobatto/">Leonardo R. Gobatto</Link></li>
+								</ul>
+								<p>
+								As versões em Unity foram criadas exclusivamente por Júlia como projeto final do curso de Jogos Digitais. A versão web, por sua vez, 
+								foi desenvolvida em parceria pelos dois. Para mais informações sobre o desenvolvimento:
+								</p>
+								<ul>
+									<li><Link href="https://github.com/JuDCraide/When-CAC">Web and Backend</Link></li>
+									<li><Link href="https://github.com/JuDCraide/When-CAC-Unity">Unity</Link></li>
 								</ul>
 							</AccordionDetails>
 						</Accordion>
@@ -206,11 +280,11 @@ export default function Home() {
 				</main>
 				<footer className={styles.footer}>
 					<p>
-						Feito com ♥ por Júlia e Leo
+						Feito com ♥ por Júlia e Léo
 					</p>
 					<div>
-						<a href="/policy">Política Privacidade</a>
-						<a href="/terms">Termos de Uso</a>
+						<Link href="/policy">Política Privacidade</Link>
+						<Link href="/terms">Termos de Uso</Link>
 					</div>
 				</footer>
 

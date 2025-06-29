@@ -13,6 +13,7 @@
 
 .main {
   padding: 3rem 2rem;
+  padding-top: calc(1.5rem + 75px);
 
   display: flex;
   flex-direction: column;
@@ -22,25 +23,41 @@
   gap: 0.5rem;
 }
 
-.page p {
+.page main p {
   text-align: justify;
   text-indent: 2em;
 }
 
-.page ul {
+.page main ul {
   list-style-type: none;
   padding-left: 2em;
 }
 
-.page ol {
+.page main ol {
   padding-left: 2em;
 }
 
-.page ul p,
-.page ol p {
+.page main ul p,
+.page main ol p {
   text-indent: 0;
 }
 
-.page p.noIdent {
+.page main p.noIdent {
   text-indent: 0;
+}
+
+.page header button {
+  flex: 0;
+}
+
+
+@media (max-width: 350px) {
+  .page header {
+    height: 130px;
+    column-gap: 2em;
+  }
+
+  .main {
+    padding-top: calc(1rem + 130px);
+  }
 }
