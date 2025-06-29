@@ -186,13 +186,13 @@ export default function Home() {
 							>Como funcionam os pontos?</AccordionSummary>
 							<AccordionDetails className={styles.faqDetails}>
 								<h3>🎯 Sistema de Pontuação</h3>
-								Jogo possui 5 rounds com pontuação total de no máximo de 1000 pontos.
-								Cada round pode render até <strong>200 pontos</strong>:
+								O jogo possui 5 rounds com pontuação total de no máximo 1000 pontos.
+								Portanto, em cada round é possível obter até 200 pontos:
 								<ul>
 									<li>100 pontos pelo Episódio</li>
 									<li>100 pontos pela Data</li>
 								</ul>
-								<div>A pontuação final é a soma das duas.</div>
+								<div>A pontuação final do round é a soma das duas.</div>
 
 								<br />
 								<h3>📺 Pontuação por Episódio</h3>
@@ -205,23 +205,23 @@ export default function Home() {
 									<li>Erro de 51 a 100 episódios → de 70 a 50 pontos</li>
 									<li>Erro de 101 a 200 episódios → de 50 a 25 pontos</li>
 									<li>Erro de 201 a 300 episódios → de 25 a 10 pontos</li>
-									<li>Erro acima de 300 episódios → até 0 pontos</li>
+									<li>Erro acima de 300 episódios → 0 pontos</li>
 								</ul>
-								
+
 								<br />
 								<h3>📅 Pontuação por Data</h3>
-								Baseado na diferença de dias entre a data real e o palpite:
+								A pontuação depende da diferença de dias entre a data real e o seu palpite:
 								<ul>
 									<li>Erro de até 1 dia → 100 pontos</li>
 									<li>Erro de até 3 dias → 99 pontos</li>
 									<li>Erro de até 7 dias → 98 pontos</li>
-									<li>Erro de 8 a 15 dias → 96 a 97 pontos (queda gradual)</li>
-									<li>Erro de 16 a 31 dias → 85 a 95 pontos</li>
-									<li>Erro de 32 a 91 dias → 70 a 85 pontos</li>
-									<li>Erro de 92 a 183 dias → 55 a 70 pontos</li>
-									<li>Erro de 184 a 365 dias → 35 a 55 pontos</li>
-									<li>Erro de até 3 anos → 15 a 35 pontos</li>
-									<li>Erro acima de 3 anos (até 5 anos) → 0 a 15 pontos</li>
+									<li>Erro de 8 a 15 dias → 97 a 96 pontos (queda gradual)</li>
+									<li>Erro de 16 a 31 dias → 95 a 85 pontos</li>
+									<li>Erro de 32 a 91 dias → 85 a 70 pontos</li>
+									<li>Erro de 92 a 183 dias → 70 a 55 pontos</li>
+									<li>Erro de 184 a 365 dias → 55 a 35 pontos</li>
+									<li>Erro acima de 1 ano e até 3 anos → 35 a 15 pontos</li>
+									<li>Erro acima de 3 anos e até 5 anos → 15 a 0 pontos</li>
 									<li>Erro acima de 5 anos → 0 pontos</li>
 								</ul>
 							</AccordionDetails>
@@ -234,10 +234,10 @@ export default function Home() {
 							>Como jogar em outras plataformas?</AccordionSummary>
 							<AccordionDetails className={styles.faqDetails}>
 								<p>
-									Este jogo foi desenvolvido como <strong>Projeto Multidisciplinar para Jogos</strong>, para conclusão do curso de <strong>Jogos Digitais</strong> da <strong>UNINTER</strong>.
+									Este jogo foi desenvolvido como Projeto Multidisciplinar para Jogos, para conclusão do curso de Jogos Digitais da UNINTER.
 									O objetivo do projeto foi colocar em prática as competências desenvolvidas ao longo do curso, resultando em uma demonstração funcional que integra design de jogos, programação, arte, sonorização, otimização, publicação e polimento.
 								</p><p>
-									A produção combinou o uso de Next.js com TypeScript, que funciona como backend e versão web funcional do jogo, além do motor Unity para as versões em Android, Web e Windows.
+									A produção combinou o uso de Next.js com TypeScript, que funciona como backend e versão web funcional do jogo; Python para automação da captura de dados; além do motor Unity para as versões em Android, Web e Windows.
 									Ele pode ser jogado pelos seguintes links:
 								</p>
 								<ul>
@@ -258,17 +258,18 @@ export default function Home() {
 							>Quem são os desenvolvedores?</AccordionSummary>
 							<AccordionDetails className={styles.faqDetails}>
 								<p>
-									Este jogo foi desenvolvido por Júlia D. Craide e Leonardo R. Gobatto, casal de desenvolvedores que se conheceram no curso de 
+									Este jogo foi desenvolvido por Júlia D. Craide e Leonardo R. Gobatto, casal de desenvolvedores que se conheceram no curso de
 									Engenharia de Computação da UFRGS. Ambos compartilham o interesse por jogos e pelos canais do YouTube Cadê a Chave e Coisa de Nerd.
-									Atualmente, Júlia atua como Engenheira de Software e Leonardo está realizando seu doutorado na UFRGS. Entre em contato conosco:
+									Atualmente, Júlia atua como Engenheira de Software e Leonardo está realizando seu doutorado em Computação na UFRGS.
 								</p>
+								<p>Entre em contato conosco:</p>
 								<ul>
 									<li><Link href="https://www.linkedin.com/in/juliadcraide/">Júlia D. Craide</Link></li>
 									<li><Link href="https://www.linkedin.com/in/leonardorgobatto/">Leonardo R. Gobatto</Link></li>
 								</ul>
 								<p>
-								As versões em Unity foram criadas exclusivamente por Júlia como projeto final do curso de Jogos Digitais. A versão web, por sua vez, 
-								foi desenvolvida em parceria pelos dois. Para mais informações sobre o desenvolvimento:
+									As versões em Unity foram criadas exclusivamente por Júlia como projeto final do curso de Jogos Digitais. A versão web, por sua vez,
+									foi desenvolvida em parceria pelos dois. Para mais informações sobre o desenvolvimento:
 								</p>
 								<ul>
 									<li><Link href="https://github.com/JuDCraide/When-CAC">Web and Backend</Link></li>
@@ -283,7 +284,7 @@ export default function Home() {
 						Feito com ♥ por Júlia e Léo
 					</p>
 					<div>
-						<Link href="/policy">Política Privacidade</Link>
+						<Link href="/policy">Política de Privacidade</Link>
 						<Link href="/terms">Termos de Uso</Link>
 					</div>
 				</footer>

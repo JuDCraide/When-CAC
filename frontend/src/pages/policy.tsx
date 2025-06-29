@@ -14,7 +14,7 @@ export default function Policy() {
         background: `var(--darker-green)`,
       }}/>
       <main className={styles.main}>
-        <h2><span>Política Privacidade</span></h2>
+        <h2><span>Política de Privacidade</span></h2>
         <p>
           <span>
             A sua privacidade é importante para nós. É política do When CAC respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site <a href="https://when-cac.vercel.app/">When CAC</a>, e outros sites que
