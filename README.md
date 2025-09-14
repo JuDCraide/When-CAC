@@ -16,6 +16,13 @@ Após cada palpite, a resposta correta é revelada, e sua pontuação é calcula
 * **Aleatório:** Jogue uma partida com 5 vídeos selecionados aleatoriamente.
 * **Com Seed:** Insira uma "seed" (semente) de um jogo anterior para jogar com os mesmos vídeos, ideal para desafiar amigos!
 
+### Onde jogar
+* **Site Web** - Jogue em https://when-cac.vercel.app/
+* **Unity Android APKPure** - Baixe o apk em APKPure https://apkpure.com/p/com.JuliaDCraide.WhenCAC
+* **Unity Android itch.io** - Baixe o apk pelo itch.io em https://judcraide.itch.io/when-cac
+* **Unity Web** - Jogue em https://judcraide.itch.io/when-cac
+* **Unity Windows** - Baixe o installer em https://judcraide.itch.io/when-cac ou baixe o zip com executável no mesmo link
+
 ## 🎯 Sistema de Pontuação
 
 A pontuação máxima total é de **1000 pontos**, sendo 200 por rodada (100 para o episódio e 100 para a data). A pontuação é calculada com base na proximidade do seu palpite com a resposta correta.
